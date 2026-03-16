@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import OnboardingScreen from '@/screens/onboarding';
 
 const Onboarding = () => {
-	return (
-		<View>
-			<Text>Onboarding</Text>
-		</View>
-	);
+	return <OnboardingScreen />;
 };
 
 export default Onboarding;

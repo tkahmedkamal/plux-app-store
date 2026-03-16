@@ -1,8 +1,8 @@
+import type { Theme } from '@/hooks/use-theme';
+
 import React, { createContext } from 'react';
 
 import { rootTheme } from '@/constants/themes';
-
-type Theme = typeof rootTheme;
 
 export const ThemeContext = createContext<Theme>({} as Theme);
 
