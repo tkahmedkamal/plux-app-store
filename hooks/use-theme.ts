@@ -1,3 +1,5 @@
+import type { rootTheme } from '@/constants/themes';
+
 import { useContext } from 'react';
 
 import { ThemeContext } from '@/providers/theme-provider';
@@ -13,3 +15,5 @@ const useTheme = () => {
 };
 
 export default useTheme;
+
+export type Theme = typeof rootTheme;
