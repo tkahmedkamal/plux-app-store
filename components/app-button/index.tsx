@@ -25,6 +25,7 @@ const AppButton = ({
 	isLoading,
 	containerStyle,
 	titleStyle,
+	...props
 }: AppButtonProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -35,6 +36,7 @@ const AppButton = ({
 		<TouchableOpacity
 			style={[styles.container, containerStyle, isDisabled && styles.disabledButton]}
 			disabled={isDisabled}
+			{...props}
 		>
 			{!isLoading ? (
 				<>

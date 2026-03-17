@@ -1,4 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
+import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
 import { Image, Text, View } from 'react-native';
 
@@ -8,6 +9,7 @@ import { useTheme } from '@/hooks';
 import makeStyles from './styles';
 
 const OnboardingScreen = () => {
+	const { replace } = useRouter();
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -31,6 +33,7 @@ const OnboardingScreen = () => {
 				<AppButton
 					title='Get Started'
 					icon={<Feather name='arrow-right' size={24} color={theme.colors.primaryForeground} />}
+					onPress={() => replace('/(app)/(auth)/sign-up')}
 				/>
 			</View>
 		</AppSafeArea>
