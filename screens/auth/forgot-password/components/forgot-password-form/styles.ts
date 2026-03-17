@@ -6,17 +6,11 @@ import { ms } from 'react-native-size-matters';
 const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 	return StyleSheet.create({
 		container: {
-			gap: ms(spaces.xs),
+			flex: 1,
+			gap: ms(spaces.xl),
 		},
-		title: {
-			fontFamily: fonts.semiBold,
-			fontSize: ms(fontSizes.xxl),
-			letterSpacing: -2,
-		},
-		text: {
-			fontFamily: fonts.regular,
-			fontSize: ms(fontSizes.sm),
-			color: colors.mutedForeground,
+		fieldContainer: {
+			flex: 1,
 		},
 	});
 };
