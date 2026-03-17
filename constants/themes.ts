@@ -25,7 +25,7 @@ export const rootTheme = {
 		xxxl: 64,
 		xxl: 32,
 		xl: 24,
-		lg: 0,
+		lg: 20,
 		base: 16,
 		sm: 14,
 		xs: 12,
@@ -36,6 +36,7 @@ export const rootTheme = {
 		md: 16,
 		sm: 12,
 		xs: 8,
+		xxs: 4,
 	},
 	rounded: {
 		lg: 20,

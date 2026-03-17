@@ -14,12 +14,15 @@ interface AppSafeAreaProps extends SafeAreaViewProps {
 	withoutPadding?: boolean;
 }
 
-const AppSafeArea = ({ style, withoutPadding, children }: AppSafeAreaProps) => {
+const AppSafeArea = ({ style, withoutPadding, children, ...props }: AppSafeAreaProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
 	return (
-		<SafeAreaView style={[styles.container, withoutPadding && { paddingHorizontal: s(0) }, style]}>
+		<SafeAreaView
+			style={[styles.container, withoutPadding && { paddingHorizontal: s(0) }, style]}
+			{...props}
+		>
 			{children}
 		</SafeAreaView>
 	);

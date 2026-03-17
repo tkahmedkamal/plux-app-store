@@ -1,16 +1,16 @@
 import { Stack } from 'expo-router';
+import React from 'react';
 
-const AppLayout = () => {
+const AuthLayout = () => {
 	return (
 		<Stack
 			screenOptions={{
 				headerShown: false,
 			}}
 		>
-			<Stack.Screen name='index' />
-			<Stack.Screen name='(auth)' />
+			<Stack.Screen name='sign-up' />
 		</Stack>
 	);
 };
 
-export default AppLayout;
+export default AuthLayout;
