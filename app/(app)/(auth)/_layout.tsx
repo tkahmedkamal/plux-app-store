@@ -9,6 +9,7 @@ const AuthLayout = () => {
 			}}
 		>
 			<Stack.Screen name='sign-up' />
+			<Stack.Screen name='log-in' />
 		</Stack>
 	);
 };
