@@ -13,7 +13,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 		},
 		text: {
 			fontFamily: fonts.regular,
-			fontSize: ms(fontSizes.sm),
+			fontSize: ms(fontSizes.xs),
 			color: colors.foreground,
 			lineHeight: ms(spaces.lg),
 		},
