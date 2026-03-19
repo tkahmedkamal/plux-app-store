@@ -1,6 +1,7 @@
 import type { output } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
@@ -18,6 +19,7 @@ const verificationCodeSchema = object({
 type VerificationCode = output<typeof verificationCodeSchema>;
 
 const VerificationCodeForm = () => {
+	const { push } = useRouter();
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -31,6 +33,7 @@ const VerificationCodeForm = () => {
 
 	const onSubmit = (values: VerificationCode) => {
 		console.log(values);
+		push('/(app)/(auth)/reset-password');
 	};
 
 	return (

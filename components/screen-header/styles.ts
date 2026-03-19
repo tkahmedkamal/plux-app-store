@@ -14,6 +14,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 		title: {
 			fontFamily: fonts.semiBold,
 			fontSize: ms(fontSizes.xxl),
+			color: colors.foreground,
 			letterSpacing: -2,
 		},
 		text: {
