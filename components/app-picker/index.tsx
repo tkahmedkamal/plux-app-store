@@ -1,89 +1,104 @@
 import type { PickerProps } from '@react-native-picker/picker';
+import type { Control, ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
+import type { StyleProp, ViewStyle } from 'react-native';
 
+import Feather from '@expo/vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { Controller } from 'react-hook-form';
 import { Modal, Pressable, Text, View } from 'react-native';
+
+import { useTheme } from '@/hooks';
 
 import AppButton from '../app-button';
 
-interface AppPickerProps extends PickerProps {
+import makeStyles from './styles';
+
+interface AppPickerProps<T extends FieldValues> extends PickerProps {
 	options: {
 		value: string;
 		label: string;
 	}[];
-	value: string;
+	name: Path<T>;
+	control: Control<T>;
 	placeholder: string;
-	triggerStyles?: string;
+	triggerStyles?: StyleProp<ViewStyle>;
 	error?: string;
-	onChange: (value: string) => void;
 }
 
-const AppPicker = ({
+const AppPicker = <T extends FieldValues>({
 	options = [],
-	value,
+	name,
+	control,
 	placeholder,
-	error,
 	triggerStyles,
-	onChange,
+	error,
 	...props
-}: AppPickerProps) => {
+}: AppPickerProps<T>) => {
+	const theme = useTheme();
+	const styles = useMemo(() => makeStyles(theme), [theme]);
 	const [visible, setVisible] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
 
-	const onValueChange = (itemValue: string) => {
+	const onValueChange = (itemValue: string, field: ControllerRenderProps<T, Path<T>>) => {
 		const selectedLabel = options.find((option) => option.value === itemValue)?.label ?? '';
 
 		setSelectedValue(selectedLabel);
-		onChange(itemValue);
+		field.onChange(itemValue);
+	};
+
+	const handleClose = () => {
+		setVisible(false);
 	};
 
 	return (
 		<>
-			<View className='gap-1'>
+			<View style={styles.container}>
 				<AppButton
 					variant='secondary'
-					// className={cn(
-					// 	'bg-input items-start p-4 border-border',
-					// 	error && 'border-destructive',
-					// 	triggerClassName
-					// )}
-					// textClassName={cn(!selectedValue && 'text-muted-foreground')}
+					title={selectedValue || placeholder}
+					style={[styles.trigger, error && styles.triggerError, triggerStyles]}
+					titleStyle={!selectedValue && styles.triggerText}
 					onPress={() => setVisible(true)}
-				>
-					{selectedValue || placeholder}
-				</AppButton>
-				{error && <Text className='text-destructive text-sm font-interRegular'>{error}</Text>}
+				/>
+				{error && <Text style={styles.errorText}>{error}</Text>}
 			</View>
+
 			<Modal animationType='slide' visible={visible} transparent>
-				<Pressable onPress={() => setVisible(false)} className='flex-1 items-center justify-end'>
-					<Pressable
-						onPress={() => {}}
-						className='bg-modal w-full p-6 justify-center items-center rounded-3xl relative'
-					>
-						<View className='w-full items-end border-b border-border-modal pb-4'>
-							<AppButton variant='ghost' className='w-16 h-8' onPress={() => setVisible(false)}>
-								Done
-							</AppButton>
+				<Pressable style={styles.modal} onPress={handleClose}>
+					<Pressable onPress={() => {}} style={styles.modalContainer}>
+						<View style={styles.header}>
+							<Text style={styles.title}>Select Role</Text>
+							<AppButton
+								size='icon'
+								variant='ghost'
+								iconAfter={<Feather name='check' style={styles.closeIcon} />}
+								style={styles.close}
+								onPress={handleClose}
+							/>
 						</View>
-						<Picker
-							{...props}
-							selectedValue={value}
-							onValueChange={(itemValue) => onValueChange(itemValue)}
-							style={{ width: '100%' }}
-							// itemStyle={{
-							// 	fontFamily: fonts.interRegular,
-							// 	height: 150,
-							// }}
-						>
-							{options.map(({ label, value }) => (
-								<Picker.Item
-									key={value}
-									// color={colors.foreground}
-									label={label}
-									value={value}
-								/>
-							))}
-						</Picker>
+						<Controller
+							name={name}
+							control={control}
+							render={({ field }) => (
+								<Picker
+									{...props}
+									selectedValue={field.value}
+									onValueChange={(itemValue) => onValueChange(itemValue, field)}
+									style={styles.picker}
+									itemStyle={styles.pickerItem}
+								>
+									{options.map(({ label, value }) => (
+										<Picker.Item
+											key={value}
+											label={label}
+											value={value}
+											color={theme.colors.foreground}
+										/>
+									))}
+								</Picker>
+							)}
+						/>
 					</Pressable>
 				</Pressable>
 			</Modal>

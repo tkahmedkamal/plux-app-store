@@ -7,16 +7,24 @@ import { useForm } from 'react-hook-form';
 import { View, Text } from 'react-native';
 import { email, object, string } from 'zod';
 
-import { AppButton, AppInput } from '@/components';
+import { AppButton, AppInput, AppPicker } from '@/components';
 import { useTheme } from '@/hooks';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
 
 const SignupSchema = object({
-	name: string().min(3, 'Your full name should be at least 3 characters'),
+	name: string().min(3, 'Your name should be at least 3 characters'),
 	email: email('Enter a valid email address'),
 	password: string().min(6, 'Password must contain at least 6 characters'),
+	role: string().refine(
+		(value) => {
+			return value.includes('customer') || value.includes('seller');
+		},
+		{
+			error: 'The role field is required',
+		}
+	),
 });
 
 type Signup = output<typeof SignupSchema>;
@@ -36,6 +44,7 @@ const SignupForm = () => {
 			name: '',
 			email: '',
 			password: '',
+			role: '',
 		},
 		mode: 'all',
 	});
@@ -78,6 +87,22 @@ const SignupForm = () => {
 					placeholder='••••••'
 					secureTextEntry
 					onSubmitEditing={handleSubmitEditing}
+				/>
+				<AppPicker
+					control={control}
+					name='role'
+					options={[
+						{
+							label: 'Seller',
+							value: 'seller',
+						},
+						{
+							label: 'Customer',
+							value: 'customer',
+						},
+					]}
+					placeholder='Select Role'
+					error={errors.role?.message}
 				/>
 				<Text style={styles.text}>
 					By signing up you agree to our{' '}
