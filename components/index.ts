@@ -4,3 +4,5 @@ export { default as SpinningIcon } from './spinning-icon';
 export { default as AppInput } from './app-input';
 export { default as DividerWithText } from './divider-with-text';
 export { default as ScreenHeader } from './screen-header';
+export { default as OTPInput } from './otp-input';
+export { default as BackButton } from './back-button';

@@ -1,6 +1,7 @@
 import type { output } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
@@ -19,6 +20,7 @@ const forgotPasswordSchema = object({
 type ForgotPassword = output<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
+	const { push } = useRouter();
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -37,6 +39,7 @@ const ForgotPasswordForm = () => {
 
 	const onSubmit = (values: ForgotPassword) => {
 		console.log(values);
+		push('/(app)/(auth)/verification-code');
 	};
 
 	const handleSubmitEditing = () => {
