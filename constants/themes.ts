@@ -7,6 +7,7 @@ export const rootTheme = {
 		card: '#ffffff',
 		destructive: '#ED1010',
 		destructiveForeground: '#ffffff',
+		destructiveOpacity: 'rgba(237, 16, 16, 0.05)',
 		warning: '#FFA928',
 		warningForeground: '#ffffff',
 		background: '#ffffff',
@@ -42,5 +43,6 @@ export const rootTheme = {
 		lg: 20,
 		md: 10,
 		sm: 6,
+		full: 100,
 	},
 };
