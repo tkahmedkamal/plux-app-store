@@ -21,6 +21,7 @@ interface AppPickerProps<T extends FieldValues> extends PickerProps {
 	}[];
 	name: Path<T>;
 	control: Control<T>;
+	label: string;
 	placeholder: string;
 	triggerStyles?: StyleProp<ViewStyle>;
 	error?: string;
@@ -30,6 +31,7 @@ const AppPicker = <T extends FieldValues>({
 	options = [],
 	name,
 	control,
+	label,
 	placeholder,
 	triggerStyles,
 	error,
@@ -54,6 +56,7 @@ const AppPicker = <T extends FieldValues>({
 	return (
 		<>
 			<View style={styles.container}>
+				<Text style={styles.label}>{label}</Text>
 				<AppButton
 					variant='secondary'
 					title={selectedValue || placeholder}

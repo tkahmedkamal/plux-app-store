@@ -8,6 +8,11 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 		container: {
 			gap: ms(spaces.xs),
 		},
+		label: {
+			fontFamily: fonts.medium,
+			fontSize: ms(fontSizes.sm),
+			color: colors.foreground,
+		},
 		trigger: {
 			justifyContent: 'flex-start',
 			backgroundColor: colors.input,
