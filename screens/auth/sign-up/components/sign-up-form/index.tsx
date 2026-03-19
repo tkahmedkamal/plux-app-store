@@ -90,6 +90,7 @@ const SignupForm = () => {
 				/>
 				<AppPicker
 					control={control}
+					label='Role'
 					name='role'
 					options={[
 						{
