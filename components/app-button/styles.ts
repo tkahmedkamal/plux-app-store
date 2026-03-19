@@ -13,6 +13,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			borderWidth: 1,
 			borderColor: 'transparent',
 			borderRadius: ms(rounded.md),
+			paddingHorizontal: ms(spaces.md),
 		},
 		lg: {
 			height: ms(54),
@@ -27,6 +28,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 		icon: {
 			width: ms(52),
 			height: ms(52),
+			paddingHorizontal: 0,
 		},
 		primary: {
 			backgroundColor: colors.primary,
