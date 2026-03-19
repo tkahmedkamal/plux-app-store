@@ -18,7 +18,8 @@ const ForgotPasswordScreen = () => {
 				<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 					<ScreenHeader
 						title='Forgot password'
-						text='Enter your email for the verification process. We will send 6 digits code to your email.'
+						text='Enter your email for the verification process. We will send 4 digits code to your email.'
+						withBackButton
 					/>
 					<ForgotPasswordForm />
 				</ScrollView>
