@@ -25,7 +25,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 		},
 		suffix: {
 			fontFamily: fonts.medium,
-			color: colors.primary,
+			color: colors.foreground,
 		},
 	});
 };
