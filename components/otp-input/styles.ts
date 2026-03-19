@@ -21,7 +21,7 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 			height: s(60),
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: colors.background,
+			backgroundColor: colors.input,
 			borderWidth: 1,
 			borderColor: colors.border,
 			borderRadius: ms(rounded.md),
@@ -32,6 +32,10 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 		slotInvalid: {
 			backgroundColor: colors.destructiveOpacity,
 			borderColor: colors.destructive,
+		},
+		slotValid: {
+			backgroundColor: colors.successOpacity,
+			borderColor: colors.success,
 		},
 		char: {
 			fontFamily: fonts.semiBold,
@@ -51,11 +55,6 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 			backgroundColor: colors.primary,
 			borderRadius: ms(1),
 		},
-		errorMessage: {
-			fontFamily: fonts.regular,
-			fontSize: ms(fontSizes.sm),
-			color: colors.destructive,
-		},
 		resendText: {
 			fontFamily: fonts.regular,
 			fontSize: ms(fontSizes.sm),
@@ -66,7 +65,7 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 			color: colors.primary,
 		},
 		resendDisabled: {
-			color: colors.mutedForeground,
+			color: colors.muted,
 		},
 		time: {
 			fontFamily: fonts.regular,

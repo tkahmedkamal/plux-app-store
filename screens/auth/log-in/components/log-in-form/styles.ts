@@ -19,6 +19,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 		},
 		link: {
 			fontFamily: fonts.semiBold,
+			color: colors.primary,
 		},
 	});
 };

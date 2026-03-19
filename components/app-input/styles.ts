@@ -16,7 +16,7 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 		fieldContainer: {
 			flexDirection: 'row',
 			alignItems: 'center',
-			backgroundColor: colors.background,
+			backgroundColor: colors.input,
 			height: ms(52),
 			borderRadius: ms(rounded.md),
 			borderWidth: 1,
@@ -34,7 +34,7 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 		icon: {
 			marginRight: ms(spaces.md),
 		},
-		errorMessage: {
+		error: {
 			fontFamily: fonts.regular,
 			fontSize: ms(fontSizes.sm),
 			color: colors.destructive,
@@ -42,11 +42,13 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 		borderFocused: {
 			borderColor: colors.primary,
 		},
-		borderInvalid: {
+		invalid: {
 			borderColor: colors.destructive,
+			backgroundColor: colors.destructiveOpacity,
 		},
-		borderValid: {
+		valid: {
 			borderColor: colors.success,
+			backgroundColor: colors.successOpacity,
 		},
 	});
 };

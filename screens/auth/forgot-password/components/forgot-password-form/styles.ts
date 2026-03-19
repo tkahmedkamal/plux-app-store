@@ -3,7 +3,7 @@ import type { Theme } from '@/hooks/use-theme';
 import { StyleSheet } from 'react-native';
 import { ms } from 'react-native-size-matters';
 
-const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
+const makeStyles = ({ spaces }: Theme) => {
 	return StyleSheet.create({
 		container: {
 			flex: 1,

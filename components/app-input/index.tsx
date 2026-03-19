@@ -39,9 +39,9 @@ const AppInput = <T extends FieldValues>({
 				const isValid = isDirty && !invalid;
 
 				const borderStyle = invalid
-					? styles.borderInvalid
+					? styles.invalid
 					: isValid
-						? styles.borderValid
+						? styles.valid
 						: isFocused
 							? styles.borderFocused
 							: undefined;
@@ -105,7 +105,7 @@ const AppInput = <T extends FieldValues>({
 							/>
 							{renderIcon()}
 						</View>
-						{error && <Text style={styles.errorMessage}>{error.message}</Text>}
+						{error && <Text style={styles.error}>{error.message}</Text>}
 					</View>
 				);
 			}}

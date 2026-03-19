@@ -1,24 +1,24 @@
 import type { Theme } from '@/hooks/use-theme';
 
 import { StyleSheet } from 'react-native';
-import { ms, s, vs } from 'react-native-size-matters';
+import { ms, vs } from 'react-native-size-matters';
 
 const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 	return StyleSheet.create({
 		text: {
+			flex: 1,
 			fontFamily: fonts.semiBold,
 			fontSize: ms(fontSizes.xxxl),
 			paddingTop: vs(spaces.lg),
-			paddingHorizontal: s(spaces.lg),
+			paddingHorizontal: ms(spaces.lg),
 			color: colors.foreground,
-			flex: 1,
-			lineHeight: vs(41),
+			lineHeight: ms(52),
 			letterSpacing: -3,
 			includeFontPadding: false,
 		},
 		linesImageContainer: {
 			position: 'absolute',
-			top: vs(210),
+			top: vs(240),
 			right: 0,
 			left: 0,
 			height: vs(236),
@@ -31,12 +31,12 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces }: Theme) => {
 		image: {
 			position: 'absolute',
 			right: 0,
-			top: vs(80),
+			top: vs(48),
 		},
 		actionContainer: {
 			backgroundColor: colors.background,
-			paddingTop: vs(spaces.lg),
-			paddingHorizontal: s(spaces.lg),
+			paddingTop: ms(spaces.xl),
+			paddingHorizontal: ms(spaces.lg),
 			borderTopWidth: 1,
 			borderTopColor: colors.border,
 		},

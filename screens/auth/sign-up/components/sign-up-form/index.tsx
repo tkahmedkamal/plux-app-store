@@ -14,7 +14,7 @@ import { handleFocusOnError } from '@/utils';
 import makeStyles from './styles';
 
 const SignupSchema = object({
-	fullName: string().min(3, 'Your full name should be at least 3 characters'),
+	name: string().min(3, 'Your full name should be at least 3 characters'),
 	email: email('Enter a valid email address'),
 	password: string().min(6, 'Password must contain at least 6 characters'),
 });
@@ -33,7 +33,7 @@ const SignupForm = () => {
 	} = useForm<Signup>({
 		resolver: zodResolver(SignupSchema),
 		defaultValues: {
-			fullName: '',
+			name: '',
 			email: '',
 			password: '',
 		},
@@ -58,9 +58,9 @@ const SignupForm = () => {
 			<View style={styles.fieldsContainer}>
 				<AppInput
 					control={control}
-					label='Full Name'
-					name='fullName'
-					placeholder='Enter your full name'
+					label='Name'
+					name='name'
+					placeholder='Enter your name'
 					onSubmitEditing={handleSubmitEditing}
 				/>
 				<AppInput

@@ -32,7 +32,9 @@ const OnboardingScreen = () => {
 			<View style={styles.actionContainer}>
 				<AppButton
 					title='Get Started'
-					icon={<Feather name='arrow-right' size={24} color={theme.colors.primaryForeground} />}
+					iconAfter={
+						<Feather name='arrow-right' size={24} color={theme.colors.primaryForeground} />
+					}
 					onPress={() => replace('/(app)/(auth)/sign-up')}
 				/>
 			</View>

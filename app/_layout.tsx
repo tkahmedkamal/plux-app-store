@@ -6,6 +6,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { Slot, SplashScreen } from 'expo-router';
 import { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 
 import { MainProvider } from '@/providers';
 
@@ -31,6 +32,7 @@ const RootLayout = () => {
 	return (
 		<MainProvider>
 			<Slot />
+			<StatusBar barStyle='light-content' />
 		</MainProvider>
 	);
 };

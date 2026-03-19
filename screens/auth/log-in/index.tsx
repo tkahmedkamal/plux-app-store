@@ -7,7 +7,7 @@ import { useTheme } from '@/hooks';
 
 import { AuthPrompt } from '../components';
 
-import LoginForm from './components/log-in-form';
+import { LoginForm } from './components';
 import makeStyles from './styles';
 
 const LoginScreen = () => {
@@ -22,8 +22,7 @@ const LoginScreen = () => {
 					<View style={styles.formContainer}>
 						<LoginForm />
 						<DividerWithText />
-						{/* TODO: FIX BUTTON */}
-						<AppButton title='Continue as Guest' disabled />
+						<AppButton title='Continue as Guest' variant='secondary' />
 					</View>
 					<AuthPrompt text='Don’t have an account?' linkText='Join' href='/(app)/(auth)/sign-up' />
 				</ScrollView>
