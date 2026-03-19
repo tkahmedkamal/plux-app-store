@@ -5,7 +5,7 @@ import { AppSafeArea, ScreenHeader } from '@/components';
 import { keyboardBehavior } from '@/constants';
 import { useTheme } from '@/hooks';
 
-import ForgotPasswordForm from './components/forgot-password-form';
+import { ForgotPasswordForm } from './components';
 import makeStyles from './styles';
 
 const ForgotPasswordScreen = () => {

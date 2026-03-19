@@ -22,8 +22,7 @@ const SignupScreen = () => {
 					<View style={styles.formContainer}>
 						<SignupForm />
 						<DividerWithText />
-						{/* TODO: FIX BUTTON */}
-						<AppButton title='Continue as Guest' disabled />
+						<AppButton title='Continue as Guest' variant='secondary' />
 					</View>
 					<AuthPrompt
 						text='Already have an account?'

@@ -1,8 +1,15 @@
-import type { StyleProp, TextStyle, TouchableOpacityProps, ViewStyle } from 'react-native';
+import type {
+	PressableProps,
+	PressableStateCallbackType,
+	StyleProp,
+	TextStyle,
+	ViewStyle,
+} from 'react-native';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
+import * as Haptics from 'expo-haptics';
 import React, { useMemo } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Platform, Pressable, Text } from 'react-native';
 
 import { useTheme } from '@/hooks';
 
@@ -10,21 +17,32 @@ import SpinningIcon from '../spinning-icon';
 
 import makeStyles from './styles';
 
-interface AppButtonProps extends TouchableOpacityProps {
-	title: string;
-	icon?: React.ReactNode;
-	containerStyle?: StyleProp<ViewStyle>;
+type Size = 'lg' | 'md' | 'sm' | 'icon';
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost';
+
+interface AppButtonProps extends PressableProps {
+	title?: string;
+	iconAfter?: React.ReactNode;
+	iconBefore?: React.ReactNode;
+	size?: Size;
+	variant?: Variant;
+	style?: StyleProp<ViewStyle>;
 	titleStyle?: StyleProp<TextStyle>;
 	isLoading?: boolean;
+	onPress?: () => void;
 }
 
 const AppButton = ({
 	title,
-	icon,
+	iconAfter,
+	iconBefore,
+	size = 'lg',
+	variant = 'primary',
 	disabled,
 	isLoading,
-	containerStyle,
+	style,
 	titleStyle,
+	onPress,
 	...props
 }: AppButtonProps) => {
 	const theme = useTheme();
@@ -32,16 +50,41 @@ const AppButton = ({
 
 	const isDisabled = disabled || isLoading;
 
+	const getDynamicStyle = ({ pressed }: PressableStateCallbackType): StyleProp<ViewStyle> => [
+		styles.container,
+		styles[size],
+		styles[variant],
+		pressed && styles.pressedOpacity,
+		pressed && variant === 'ghost' && styles.pressedGhost,
+		pressed && styles.scale,
+		isDisabled && styles.disabledButton,
+		style,
+	];
+
+	const handlePress = () => {
+		if (Platform.OS !== 'web') {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+		}
+		onPress?.();
+	};
+
 	return (
-		<TouchableOpacity
-			style={[styles.container, containerStyle, isDisabled && styles.disabledButton]}
+		<Pressable
+			style={getDynamicStyle}
 			disabled={isDisabled}
 			{...props}
+			accessibilityRole='button'
+			onPress={handlePress}
 		>
 			{!isLoading ? (
 				<>
-					<Text style={[styles.title, titleStyle, isDisabled && styles.disabledText]}>{title}</Text>
-					{icon && icon}
+					{iconBefore && iconBefore}
+					{title && (
+						<Text style={[styles.title, titleStyle, isDisabled && styles.disabledText]}>
+							{title}
+						</Text>
+					)}
+					{iconAfter && iconAfter}
 				</>
 			) : (
 				<SpinningIcon>
@@ -52,7 +95,7 @@ const AppButton = ({
 					/>
 				</SpinningIcon>
 			)}
-		</TouchableOpacity>
+		</Pressable>
 	);
 };
 

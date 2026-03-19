@@ -27,7 +27,10 @@ interface OTPInputProps<T extends FieldValues> {
 
 interface SlotProps extends SlotPropsInterface {
 	styles?: OTPInputStyles;
-	invalid?: boolean;
+	stats: {
+		invalid: boolean;
+		isDirty: boolean;
+	};
 }
 
 interface FakeCaretProps {
@@ -66,7 +69,7 @@ const OTPInput = <T extends FieldValues>({
 			<Controller
 				name={name}
 				control={control}
-				render={({ field, fieldState: { invalid } }) => (
+				render={({ field, fieldState: { invalid, isDirty } }) => (
 					<OTPInputField
 						ref={field.ref}
 						onChange={field.onChange}
@@ -79,7 +82,7 @@ const OTPInput = <T extends FieldValues>({
 						render={({ slots }) => (
 							<View style={styles.slotsContainer}>
 								{slots.map((slot, idx) => (
-									<Slot key={idx} {...slot} styles={styles} invalid={invalid} />
+									<Slot key={idx} {...slot} styles={styles} stats={{ invalid, isDirty }} />
 								))}
 							</View>
 						)}
@@ -90,6 +93,7 @@ const OTPInput = <T extends FieldValues>({
 				Email not received?{' '}
 				<Text
 					style={[styles.resendBtn, hasTime && styles.resendDisabled]}
+					disabled={hasTime}
 					onPress={handleResendCode}
 				>
 					Resend Code
@@ -106,9 +110,21 @@ const OTPInput = <T extends FieldValues>({
 
 export default OTPInput;
 
-const Slot = ({ char, isActive, hasFakeCaret, invalid, styles }: SlotProps) => {
+const Slot = ({ char, isActive, hasFakeCaret, stats, styles }: SlotProps) => {
+	const { isDirty, invalid } = stats;
+
+	const isValid = isDirty && !invalid;
+
+	const slotStyles = invalid
+		? styles?.slotInvalid
+		: isValid
+			? styles?.slotValid
+			: isActive
+				? styles?.slotActive
+				: undefined;
+
 	return (
-		<View style={[styles?.slot, isActive && styles?.slotActive, invalid && styles?.slotInvalid]}>
+		<View style={[styles?.slot, slotStyles]}>
 			{char !== null && <Text style={styles?.char}>{char}</Text>}
 			{hasFakeCaret && <FakeCaret styles={styles} />}
 		</View>
