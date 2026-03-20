@@ -19,7 +19,8 @@ export const rootTheme = {
 		mutedForeground: '#CCCCCC',
 		border: '#353535',
 		input: '#242424',
-		backdrop: 'rgba(0, 0, 0, 0.46)',
+		modal: '#242424',
+		backdrop: 'rgba(0, 0, 0, 0.63)',
 	},
 	fonts: {
 		regular: 'Inter_400Regular',
