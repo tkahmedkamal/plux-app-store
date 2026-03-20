@@ -40,7 +40,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			position: 'relative',
 			width: '100%',
 			alignItems: 'center',
-			backgroundColor: colors.background,
+			backgroundColor: colors.modal,
 			paddingVertical: ms(spaces.sm),
 			paddingHorizontal: ms(spaces.xl),
 			borderRadius: ms(rounded.lg),

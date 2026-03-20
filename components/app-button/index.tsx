@@ -18,7 +18,7 @@ import SpinningIcon from '../spinning-icon';
 import makeStyles from './styles';
 
 type Size = 'lg' | 'md' | 'sm' | 'icon';
-type Variant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type Variant = 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost';
 
 interface AppButtonProps extends PressableProps {
 	title?: string;

@@ -36,6 +36,9 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 		secondary: {
 			backgroundColor: colors.secondary,
 		},
+		destructive: {
+			backgroundColor: colors.destructive,
+		},
 		outline: {
 			backgroundColor: 'transparent',
 			borderColor: colors.border,
