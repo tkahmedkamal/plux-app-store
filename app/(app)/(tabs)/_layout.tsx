@@ -41,6 +41,14 @@ const TabsLayout = () => {
 				}}
 			/>
 			<Tabs.Screen
+				name='search'
+				options={{
+					title: 'Search',
+					headerShown: false,
+					tabBarIcon: ({ color, size }) => <Ionicons name='search' size={ms(size)} color={color} />,
+				}}
+			/>
+			<Tabs.Screen
 				name='wishlist'
 				options={{
 					title: 'Wishlist',
