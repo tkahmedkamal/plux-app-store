@@ -19,3 +19,7 @@ export const handleFocusOnError = <T extends FieldValues>({
 	}
 	onSubmit();
 };
+
+export const getCurrencyFormat = (currency: string, price: number, locale = 'en-US') => {
+	return Intl.NumberFormat(locale, { style: 'currency', currency }).format(price);
+};

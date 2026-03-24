@@ -8,3 +8,5 @@ export { default as OTPInput } from './otp-input';
 export { default as BackButton } from './back-button';
 export { default as AppPicker } from './app-picker';
 export { default as AppModal } from './app-modal';
+export { default as ProductCard } from './product-card';
+export { default as SearchInput } from './search-input';

@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 
@@ -22,7 +23,18 @@ const LoginScreen = () => {
 					<View style={styles.formContainer}>
 						<LoginForm />
 						<DividerWithText />
-						<AppButton title='Continue as Guest' variant='secondary' />
+						<AppButton
+							title='Continue as Guest'
+							variant='secondary'
+							onPress={() =>
+								router.replace({
+									pathname: '/(app)/(tabs)/home',
+									params: {
+										category: 'all',
+									},
+								})
+							}
+						/>
 					</View>
 					<AuthPrompt text='Don’t have an account?' linkText='Join' href='/(app)/(auth)/sign-up' />
 				</ScrollView>
