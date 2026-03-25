@@ -10,3 +10,4 @@ export { default as AppPicker } from './app-picker';
 export { default as AppModal } from './app-modal';
 export { default as ProductCard } from './product-card';
 export { default as SearchInput } from './search-input';
+export { default as Divider } from './divider';

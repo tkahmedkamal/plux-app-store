@@ -1,4 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
+import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
@@ -18,6 +19,7 @@ const SearchFilterBar = () => {
 				variant='secondary'
 				size='icon'
 				iconAfter={<Feather name='filter' style={styles.icon} />}
+				onPress={() => router.push('/(app)/(sheets)/filter')}
 			/>
 		</View>
 	);
