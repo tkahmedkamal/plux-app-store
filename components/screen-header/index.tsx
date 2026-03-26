@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 
 import { useTheme } from '@/hooks';
 
-import { BackButton } from '..';
+import BackButton from '../back-button';
 
 import makeStyles from './styles';
 
