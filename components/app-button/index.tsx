@@ -80,7 +80,15 @@ const AppButton = ({
 				<>
 					{iconBefore && iconBefore}
 					{title && (
-						<Text style={[styles.title, titleStyle, isDisabled && styles.disabledText]}>
+						<Text
+							style={[
+								styles.title,
+								titleStyle,
+								variant === 'secondary' && styles.titleSecondary,
+								variant === 'outline' && styles.outlineText,
+								isDisabled && styles.disabledText,
+							]}
+						>
 							{title}
 						</Text>
 					)}

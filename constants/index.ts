@@ -7,6 +7,8 @@ export const keyboardBehavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
 export const ITEM_SPACING = ms(rootTheme.spaces.lg);
 export const LAYOUT_PADDING = ms(rootTheme.spaces.xl);
+export const MIN_PRICE = 0;
+export const MAX_PRICE = 30000;
 
 export const SORT_OPTIONS = [
 	{
@@ -35,3 +37,11 @@ export const SORT_OPTIONS = [
 		value: 'stock:desc',
 	},
 ];
+
+export const INITIAL_FILTERS = {
+	sort: 'default',
+	price: {
+		min: MIN_PRICE,
+		max: MAX_PRICE,
+	},
+};

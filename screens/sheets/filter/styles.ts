@@ -28,6 +28,12 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			fontSize: ms(fontSizes.lg),
 			color: colors.foreground,
 		},
+		actionButtons: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'space-between',
+			gap: ms(spaces.xxs),
+		},
 		closeBtn: {
 			width: ms(40),
 			height: ms(40),

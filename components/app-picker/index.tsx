@@ -58,7 +58,7 @@ const AppPicker = <T extends FieldValues>({
 			<View style={styles.container}>
 				<Text style={styles.label}>{label}</Text>
 				<AppButton
-					variant='secondary'
+					variant='outline'
 					title={selectedValue || placeholder}
 					style={[styles.trigger, error && styles.triggerError, triggerStyles]}
 					titleStyle={!selectedValue && styles.triggerText}

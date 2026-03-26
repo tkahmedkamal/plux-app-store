@@ -1,23 +1,33 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text } from 'react-native';
 import RangeSlider from 'react-native-sticky-range-slider';
 
+import { MAX_PRICE, MIN_PRICE } from '@/constants';
 import { useTheme } from '@/hooks';
 
 import makeStyles from './styles';
 
-const MIN_AGE = 1;
-const MAX_AGE = 20;
+interface FilterPriceProps {
+	price: Price;
+	onValueChange: (price: Price) => void;
+}
 
-const FilterPrice = () => {
+const FilterPrice = ({ price, onValueChange }: FilterPriceProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const [min, setMin] = useState(MIN_AGE);
-	const [max, setMax] = useState(MAX_AGE);
+	const [initialPrice, setInitialPrice] = useState(price);
+	const onChangeValueRef = useRef(onValueChange);
 
-	const handleValueChange = useCallback((newLow: number, newHigh: number) => {
-		setMin(newLow);
-		setMax(newHigh);
+	useEffect(() => {
+		setInitialPrice(price);
+	}, [price]);
+
+	onChangeValueRef.current = onValueChange;
+
+	const handleValueChange = useCallback((min: number, max: number) => {
+		setInitialPrice({ min, max });
+
+		onChangeValueRef.current({ min, max });
 	}, []);
 
 	return (
@@ -25,16 +35,16 @@ const FilterPrice = () => {
 			<View style={styles.header}>
 				<Text style={styles.title}>Price</Text>
 				<Text style={styles.range}>
-					${min} - ${max}
+					${initialPrice.min} - ${initialPrice.max}
 				</Text>
 			</View>
 			<RangeSlider
-				min={MIN_AGE}
-				max={MAX_AGE}
+				min={MIN_PRICE}
+				max={MAX_PRICE}
 				step={1}
 				minRange={5}
-				low={min}
-				high={max}
+				low={initialPrice.min}
+				high={initialPrice.max}
 				onValueChanged={handleValueChange}
 				renderHighValue={() => null}
 				renderLowValue={() => null}

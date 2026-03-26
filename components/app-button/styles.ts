@@ -34,7 +34,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			backgroundColor: colors.primary,
 		},
 		secondary: {
-			backgroundColor: colors.secondary,
+			backgroundColor: colors.primaryOpacity,
 		},
 		destructive: {
 			backgroundColor: colors.destructive,
@@ -43,6 +43,9 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			backgroundColor: 'transparent',
 			borderColor: colors.border,
 		},
+		outlineText: {
+			color: colors.foreground,
+		},
 		ghost: {
 			backgroundColor: 'transparent',
 		},
@@ -50,6 +53,9 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			fontFamily: fonts.medium,
 			fontSize: ms(fontSizes.base),
 			color: colors.primaryForeground,
+		},
+		titleSecondary: {
+			color: colors.primary,
 		},
 		pressedOpacity: {
 			opacity: 0.7,

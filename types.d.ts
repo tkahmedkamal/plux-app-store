@@ -72,3 +72,8 @@ interface FilterParams {
 	minPrice?: string;
 	maxPrice?: string;
 }
+
+interface Price {
+	min: number;
+	max: number;
+}

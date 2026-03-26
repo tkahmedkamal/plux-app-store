@@ -1,30 +1,25 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { INITIAL_FILTERS } from '@/constants';
+
 import zustandStore from './storage';
 
-interface Price {
-	minPrice: number;
-	maxPrice: number;
+interface Filters {
+	sort: string;
+	price: Price;
 }
 
 interface InitialState {
-	sort: string;
-	price: Price;
-	setSort: (value: string) => void;
-	setPrice: (price: Price) => void;
+	filters: Filters;
+	setFilters: (filters: Filters) => void;
 }
 
 const useFilterStore = create<InitialState>()(
 	persist(
 		(set) => ({
-			sort: 'default',
-			price: {
-				minPrice: 1,
-				maxPrice: 20,
-			},
-			setSort: (value) => set({ sort: value }),
-			setPrice: (price) => set({ price: price }),
+			filters: INITIAL_FILTERS,
+			setFilters: (filters) => set({ filters }),
 		}),
 		{
 			name: 'filters',
