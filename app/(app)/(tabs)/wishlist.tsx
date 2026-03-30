@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import WishlistScreen from '@/screens/tabs/wishlist';
 
 const Wishlist = () => {
-	return (
-		<View>
-			<Text>Wishlist</Text>
-		</View>
-	);
+	return <WishlistScreen />;
 };
 
 export default Wishlist;
