@@ -86,6 +86,7 @@ const AppButton = ({
 								titleStyle,
 								variant === 'secondary' && styles.titleSecondary,
 								variant === 'outline' && styles.outlineText,
+								variant === 'ghost' && styles.ghostText,
 								isDisabled && styles.disabledText,
 							]}
 						>
