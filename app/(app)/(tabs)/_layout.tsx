@@ -28,6 +28,15 @@ const TabsLayout = () => {
 					fontSize: ms(fontSizes.xs),
 					marginTop: ms(spaces.xxs),
 				},
+				headerStyle: {
+					height: ms(120),
+					shadowOpacity: 0,
+				},
+				headerTitleStyle: {
+					fontFamily: fonts.semiBold,
+					fontSize: ms(fontSizes.lg),
+					color: colors.foreground,
+				},
 			}}
 		>
 			<Tabs.Screen
@@ -44,7 +53,7 @@ const TabsLayout = () => {
 				name='search'
 				options={{
 					title: 'Search',
-					headerShown: false,
+
 					tabBarIcon: ({ color, size }) => <Ionicons name='search' size={ms(size)} color={color} />,
 				}}
 			/>

@@ -29,6 +29,16 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 			marginLeft: ms(spaces.md),
 			color: colors.mutedForeground,
 		},
+		clearButton: {
+			width: ms(32),
+			height: ms(32),
+			borderRadius: rounded.full,
+			marginRight: ms(spaces.xs),
+		},
+		clearIcon: {
+			fontSize: ms(fontSizes.base),
+			color: colors.mutedForeground,
+		},
 		borderFocused: {
 			borderColor: colors.primary,
 		},

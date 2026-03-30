@@ -49,6 +49,9 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 		ghost: {
 			backgroundColor: 'transparent',
 		},
+		ghostText: {
+			color: colors.foreground,
+		},
 		title: {
 			fontFamily: fonts.medium,
 			fontSize: ms(fontSizes.base),
