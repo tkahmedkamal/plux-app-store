@@ -17,6 +17,8 @@ const WishlistCard = ({ product }: WishlistCardProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
+	const imageUri = product.images[0]?.url;
+
 	return (
 		<Pressable style={styles.container} onPress={() => router.push('/')}>
 			<View style={styles.imageContainer}>
@@ -26,7 +28,11 @@ const WishlistCard = ({ product }: WishlistCardProps) => {
 					iconAfter={<FontAwesome name='heart' style={styles.wishlistIcon} />}
 					style={styles.wishlist}
 				/>
-				<Image source={{ uri: product.images[0].url }} resizeMode='contain' style={styles.image} />
+				<Image
+					source={imageUri ? { uri: imageUri } : require('@/assets/images/placeholder.png')}
+					resizeMode='contain'
+					style={styles.image}
+				/>
 			</View>
 			<View style={styles.bodyContainer}>
 				<Text style={styles.title}>{product.title}</Text>
