@@ -12,3 +12,6 @@ export { default as ProductCard } from './product-card';
 export { default as SearchInput } from './search-input';
 export { default as Divider } from './divider';
 export { default as ProductHorizontalCard } from './product-horizontal-card';
+export { default as CustomStackHeader } from './custom-stack-header';
+export { default as WishlistButton } from './wishlist-button';
+export { default as Badge } from './badge';

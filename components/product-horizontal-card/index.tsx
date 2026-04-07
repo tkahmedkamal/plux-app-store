@@ -20,7 +20,7 @@ const ProductHorizontalCard = ({ product }: ProductHorizontalCardProps) => {
 	const { saveToHistory } = useSearchHistory();
 
 	const handlePress = () => {
-		router.push('/');
+		router.push(`/product/${product.id}`);
 		saveToHistory(term);
 	};
 
