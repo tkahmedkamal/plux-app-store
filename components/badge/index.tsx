@@ -19,14 +19,15 @@ const Badge = ({ text, variant = 'default' }: BadgeProps) => {
 		...styles[variant],
 	};
 
-	const textStyle = {
-		...styles.text,
-		...styles[`text${variant.charAt(0).toUpperCase()}${variant.slice(1)}` as keyof typeof styles],
+	const textVariantStyleMap = {
+		default: styles.textDefault,
+		success: styles.textSuccess,
+		destructive: styles.textDestructive,
 	};
 
 	return (
-		<View style={containerStyle}>
-			<Text style={textStyle}>{text}</Text>
+		<View style={[containerStyle, styles[variant]]}>
+			<Text style={[styles.text, textVariantStyleMap[variant]]}>{text}</Text>
 		</View>
 	);
 };

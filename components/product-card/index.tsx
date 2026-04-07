@@ -5,7 +5,7 @@ import { View, Text, Image, Pressable } from 'react-native';
 import { useTheme } from '@/hooks';
 import { getCurrencyFormat } from '@/utils';
 
-import WIshlistButton from '../wishlist-button';
+import WishlistButton from '../wishlist-button';
 
 import makeStyles from './styles';
 
@@ -20,7 +20,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	return (
 		<Pressable style={styles.container} onPress={() => router.push(`/product/${product.id}`)}>
 			<View style={styles.imageContainer}>
-				<WIshlistButton productId={product.id} />
+				<WishlistButton onPress={() => {}} />
 				<Image source={{ uri: product.images[0].url }} resizeMode='contain' style={styles.image} />
 			</View>
 			<View style={styles.bodyContainer}>

@@ -14,7 +14,7 @@ interface WishlistButtonProps {
 	onPress: () => void;
 }
 
-const WIshlistButton = ({ style, onPress }: WishlistButtonProps) => {
+const WishlistButton = ({ style, onPress }: WishlistButtonProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -29,4 +29,4 @@ const WIshlistButton = ({ style, onPress }: WishlistButtonProps) => {
 	);
 };
 
-export default WIshlistButton;
+export default WishlistButton;
