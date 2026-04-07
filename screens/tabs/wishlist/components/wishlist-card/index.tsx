@@ -1,9 +1,8 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { View, Text, Pressable, Image } from 'react-native';
 
-import { AppButton } from '@/components';
+import { WishlistButton } from '@/components';
 import { useTheme } from '@/hooks';
 import { getCurrencyFormat } from '@/utils';
 
@@ -20,14 +19,9 @@ const WishlistCard = ({ product }: WishlistCardProps) => {
 	const imageUri = product.images[0]?.url;
 
 	return (
-		<Pressable style={styles.container} onPress={() => router.push('/')}>
+		<Pressable style={styles.container} onPress={() => router.push(`/product/${product.id}`)}>
 			<View style={styles.imageContainer}>
-				<AppButton
-					variant='secondary'
-					size='icon'
-					iconAfter={<FontAwesome name='heart' style={styles.wishlistIcon} />}
-					style={styles.wishlist}
-				/>
+				<WishlistButton style={styles.wishlist} onPress={() => {}} />
 				<Image
 					source={imageUri ? { uri: imageUri } : require('@/assets/images/placeholder.png')}
 					resizeMode='contain'
