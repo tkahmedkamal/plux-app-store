@@ -19,6 +19,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			height: ms(180),
 			backgroundColor: colors.card,
 			borderRadius: rounded.md,
+			overflow: 'hidden',
 		},
 		image: {
 			width: '100%',

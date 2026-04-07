@@ -19,6 +19,7 @@ const makeStyles = ({ colors, fonts, fontSizes, spaces, rounded }: Theme) => {
 			height: ms(120),
 			backgroundColor: colors.card,
 			borderRadius: rounded.md,
+			overflow: 'hidden',
 		},
 		wishlist: {
 			width: ms(32),
