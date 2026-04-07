@@ -11,6 +11,18 @@ const AppLayout = () => {
 			<Stack.Screen name='index' />
 			<Stack.Screen name='(auth)' />
 			<Stack.Screen
+				name='(sheets)/filter'
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: [0.52],
+					sheetGrabberVisible: true,
+					sheetExpandsWhenScrolledToEdge: true,
+					contentStyle: {
+						backgroundColor: colors.modal,
+					},
+				}}
+			/>
+			<Stack.Screen
 				name='product/[id]/index'
 				options={{
 					headerShown: true,
