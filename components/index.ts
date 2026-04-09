@@ -15,3 +15,4 @@ export { default as ProductHorizontalCard } from './product-horizontal-card';
 export { default as CustomStackHeader } from './custom-stack-header';
 export { default as WishlistButton } from './wishlist-button';
 export { default as Badge } from './badge';
+export { default as Empty } from './empty';

@@ -4,9 +4,11 @@ import React from 'react';
 import { ms } from 'react-native-size-matters';
 
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 
 const TabsLayout = () => {
 	const { colors, fonts, fontSizes, spaces } = useTheme();
+	const { totalItems } = useCartStore();
 
 	return (
 		<Tabs
@@ -70,6 +72,12 @@ const TabsLayout = () => {
 				name='cart'
 				options={{
 					title: 'Cart',
+					tabBarBadge: totalItems,
+					tabBarBadgeStyle: {
+						fontFamily: fonts.semiBold,
+						fontSize: ms(fontSizes.xs),
+						backgroundColor: colors.primary,
+					},
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='cart-outline' size={ms(size)} color={color} />
 					),

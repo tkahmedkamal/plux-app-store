@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 
 import { Divider } from '@/components';
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 import { getCurrencyFormat } from '@/utils';
 
 import makeStyles from './style';
@@ -10,6 +11,7 @@ import makeStyles from './style';
 const CartSummary = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const { totalAmount } = useCartStore();
 
 	return (
 		<View style={styles.container}>
@@ -28,7 +30,7 @@ const CartSummary = () => {
 			<Divider />
 			<View style={styles.itemContainer}>
 				<Text style={styles.ItemText}>Total</Text>
-				<Text style={styles.itemValue}>{getCurrencyFormat('USD', 6791.8)}</Text>
+				<Text style={styles.itemValue}>{getCurrencyFormat('USD', totalAmount)}</Text>
 			</View>
 		</View>
 	);

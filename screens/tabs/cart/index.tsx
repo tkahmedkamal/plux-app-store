@@ -2,9 +2,10 @@ import Feather from '@expo/vector-icons/Feather';
 import React, { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
 
-import { AppButton } from '@/components';
-import { products } from '@/fake-data';
+import { CartDuotoneIcon } from '@/assets/svgs';
+import { AppButton, Empty } from '@/components';
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 
 import { CartItemCard, CartSummary, CouponForm } from './components';
 import makeStyles from './style';
@@ -12,31 +13,42 @@ import makeStyles from './style';
 const CartScreen = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const { items } = useCartStore();
 
-	// TODO: get cart items from API
-	const cartItems = products.slice(0, 2);
+	const isEmpty = items.length === 0;
 
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={cartItems}
+				data={items}
 				keyExtractor={({ id }) => id}
-				renderItem={({ item }) => <CartItemCard {...item} />}
-				contentContainerStyle={styles.contentContainer}
+				renderItem={({ item }) => <CartItemCard productId={item.id} />}
+				contentContainerStyle={[styles.contentContainer, isEmpty && { flex: 1 }]}
 				ListFooterComponentStyle={styles.listFooterComponent}
 				ListFooterComponent={
-					<View style={styles.footerContainer}>
-						<CouponForm />
-						<CartSummary />
-					</View>
+					!isEmpty ? (
+						<View style={styles.footerContainer}>
+							<CouponForm />
+							<CartSummary />
+						</View>
+					) : null
+				}
+				ListEmptyComponent={
+					<Empty
+						title='Your cart is empty'
+						description='When you add products, they’ll appear here.'
+						icon={<CartDuotoneIcon />}
+					/>
 				}
 				showsVerticalScrollIndicator={false}
 			/>
-			<AppButton
-				title='Go to Checkout'
-				iconAfter={<Feather name='arrow-right' style={styles.checkoutButtonIcon} />}
-				onPress={() => {}}
-			/>
+			{!isEmpty && (
+				<AppButton
+					title='Go to Checkout'
+					iconAfter={<Feather name='arrow-right' style={styles.checkoutButtonIcon} />}
+					onPress={() => {}}
+				/>
+			)}
 		</View>
 	);
 };

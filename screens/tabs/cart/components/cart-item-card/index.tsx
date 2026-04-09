@@ -4,6 +4,7 @@ import { View, Text, Image } from 'react-native';
 
 import { AppButton } from '@/components';
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 import { getCurrencyFormat } from '@/utils';
 
 import Quantity from '../quantity';
@@ -11,24 +12,28 @@ import Quantity from '../quantity';
 import makeStyles from './style';
 
 interface CartItemCardProps {
-	id: string;
-	images: ProductImage[];
-	title: string;
-	currency: string;
-	price: number;
+	productId: string;
 }
 
-const CartItemCard = ({ images, title, currency, price }: CartItemCardProps) => {
+const CartItemCard = ({ productId }: CartItemCardProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const { items, removeItemFromCart } = useCartStore();
 
+	const currentItem = items.find((item) => item.id === productId);
+
+	if (!currentItem) {
+		return null;
+	}
+
+	const { title, currency, images, price, totalAmount } = currentItem;
 	const imageUrl = images[0]?.url;
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
 				<Image
-					source={{ uri: imageUrl ? imageUrl : require('@/assets/images/placeholder.png') }}
+					source={imageUrl ? { uri: imageUrl } : require('@/assets/images/placeholder.png')}
 					resizeMode='contain'
 					style={styles.image}
 				/>
@@ -37,9 +42,9 @@ const CartItemCard = ({ images, title, currency, price }: CartItemCardProps) => 
 			<View style={styles.infoContainer}>
 				<View style={styles.infoTitleContainer}>
 					<Text style={styles.title}>{title}</Text>
-					<Text style={styles.itemsText}>items: 2x</Text>
+					<Text style={styles.itemsText}>{getCurrencyFormat(currency, price)}</Text>
 				</View>
-				<Text style={styles.price}>{getCurrencyFormat(currency, price)}</Text>
+				<Text style={styles.price}>{getCurrencyFormat(currency, totalAmount)}</Text>
 			</View>
 
 			<View style={styles.actionsContainer}>
@@ -48,8 +53,9 @@ const CartItemCard = ({ images, title, currency, price }: CartItemCardProps) => 
 					variant='ghost'
 					iconAfter={<MaterialIcons name='delete-outline' style={styles.deleteButtonIcon} />}
 					style={styles.deleteButton}
+					onPress={() => removeItemFromCart(productId)}
 				/>
-				<Quantity />
+				<Quantity productId={productId} />
 			</View>
 		</View>
 	);

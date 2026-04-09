@@ -1,23 +1,32 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 
 import { AppButton } from '@/components';
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 
 import makeStyles from './style';
 
-const Quantity = () => {
+interface QuantityProps {
+	productId: string;
+}
+
+const Quantity = ({ productId }: QuantityProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const [quantity, setQuantity] = useState(1);
+	const { items, addToCart, removeFromCart } = useCartStore();
+
+	const currentItem = items.find((item) => item.id === productId);
+	const quantity = currentItem?.quantity ?? 0;
 
 	const handleIncrease = () => {
-		setQuantity(quantity + 1);
+		if (!currentItem) return;
+		addToCart(currentItem);
 	};
 	const handleDecrease = () => {
-		if (quantity <= 1) return;
-		setQuantity(quantity - 1);
+		if (!currentItem) return;
+		removeFromCart(currentItem);
 	};
 
 	return (
