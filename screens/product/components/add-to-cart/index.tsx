@@ -7,9 +7,10 @@ import { useTheme } from '@/hooks';
 import makeStyles from './style';
 
 interface AddToCartProps {
+	disabled?: boolean;
 	onPress: () => void;
 }
-const AddToCart = ({ onPress }: AddToCartProps) => {
+const AddToCart = ({ disabled, onPress }: AddToCartProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -17,8 +18,14 @@ const AddToCart = ({ onPress }: AddToCartProps) => {
 		<AppButton
 			size='lg'
 			title='Add to Cart'
-			iconBefore={<MaterialIcons name='add-shopping-cart' style={styles.icon} />}
+			iconBefore={
+				<MaterialIcons
+					name='add-shopping-cart'
+					style={[styles.icon, disabled && styles.disabledIcon]}
+				/>
+			}
 			onPress={onPress}
+			disabled={disabled}
 		/>
 	);
 };

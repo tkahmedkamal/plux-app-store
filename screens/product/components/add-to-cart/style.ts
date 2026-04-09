@@ -9,6 +9,9 @@ const makeStyles = (theme: Theme) => {
 			fontSize: ms(theme.fontSizes.xl),
 			color: theme.colors.primaryForeground,
 		},
+		disabledIcon: {
+			color: theme.colors.mutedForeground,
+		},
 	});
 };
 

@@ -15,7 +15,7 @@ const ProductScreen = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { addToCart } = useCartStore();
+	const addToCart = useCartStore((state) => state.addToCart);
 
 	const foundProduct = products.find((product) => product.id === id);
 
@@ -30,6 +30,8 @@ const ProductScreen = () => {
 	const badgeText = inStock ? 'In Stock' : 'Out of Stock';
 
 	const handleAddToCart = () => {
+		if (!inStock) return;
+
 		addToCart(foundProduct);
 	};
 
@@ -65,7 +67,7 @@ const ProductScreen = () => {
 					<Text style={styles.priceLabel}>Price</Text>
 					<Text style={styles.priceValue}>{getCurrencyFormat(currency, price)}</Text>
 				</View>
-				<AddToCart onPress={handleAddToCart} />
+				<AddToCart onPress={handleAddToCart} disabled={!inStock} />
 			</View>
 		</View>
 	);

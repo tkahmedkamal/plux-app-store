@@ -11,7 +11,7 @@ import makeStyles from './style';
 const CartSummary = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const { totalAmount } = useCartStore();
+	const totalAmount = useCartStore((state) => state.totalAmount);
 
 	return (
 		<View style={styles.container}>

@@ -15,9 +15,11 @@ interface QuantityProps {
 const Quantity = ({ productId }: QuantityProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const { items, addToCart, removeFromCart } = useCartStore();
 
-	const currentItem = items.find((item) => item.id === productId);
+	const currentItem = useCartStore((state) => state.items.find((item) => item.id === productId));
+	const addToCart = useCartStore((state) => state.addToCart);
+	const removeFromCart = useCartStore((state) => state.removeFromCart);
+
 	const quantity = currentItem?.quantity ?? 0;
 
 	const handleIncrease = () => {

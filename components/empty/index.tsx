@@ -22,7 +22,7 @@ const Empty = ({ title, description, icon }: EmptyProps) => {
 			{icon}
 			<View style={styles.textContainer}>
 				<Text style={styles.title}>{title}</Text>
-				<Text style={styles.description}>{description}</Text>
+				{description && <Text style={styles.description}>{description}</Text>}
 			</View>
 		</View>
 	);

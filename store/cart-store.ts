@@ -43,29 +43,25 @@ const useCartStore = create<InitialState>((set) => ({
 		}),
 	removeFromCart: (product: Product) =>
 		set((state) => {
-			const existingItem = state.items.some((item) => item.id === product.id);
+			const existingItem = state.items.find((item) => item.id === product.id);
 
-			if (existingItem) {
-				return {
-					items: state.items
-						.map((item) => {
-							return item.id === product.id
-								? {
-										...item,
-										quantity: item.quantity - 1,
-										totalAmount: item.totalAmount - item.price,
-									}
-								: item;
-						})
-						.filter((item) => item.quantity > 0),
-					totalAmount: state.totalAmount - product.price,
-					totalItems: state.totalItems - 1,
-				};
+			if (!existingItem) {
+				return state;
 			}
 
 			return {
-				items: state.items.filter((item) => item.id !== product.id),
-				totalAmount: state.totalAmount - product.price,
+				items: state.items
+					.map((item) => {
+						return item.id === existingItem.id
+							? {
+									...item,
+									quantity: item.quantity - 1,
+									totalAmount: item.totalAmount - item.price,
+								}
+							: item;
+					})
+					.filter((item) => item.quantity > 0),
+				totalAmount: state.totalAmount - existingItem.price,
 				totalItems: state.totalItems - 1,
 			};
 		}),

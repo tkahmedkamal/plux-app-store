@@ -8,7 +8,7 @@ import { useCartStore } from '@/store';
 
 const TabsLayout = () => {
 	const { colors, fonts, fontSizes, spaces } = useTheme();
-	const { totalItems } = useCartStore();
+	const totalItems = useCartStore((state) => state.totalItems);
 
 	return (
 		<Tabs
@@ -72,7 +72,7 @@ const TabsLayout = () => {
 				name='cart'
 				options={{
 					title: 'Cart',
-					tabBarBadge: totalItems,
+					tabBarBadge: totalItems > 0 ? totalItems : undefined,
 					tabBarBadgeStyle: {
 						fontFamily: fonts.semiBold,
 						fontSize: ms(fontSizes.xs),

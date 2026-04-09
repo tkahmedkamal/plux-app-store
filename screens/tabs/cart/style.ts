@@ -17,6 +17,9 @@ const makeStyles = ({ colors, fontSizes, spaces }: Theme) => {
 			gap: ms(spaces.md),
 			paddingBottom: ms(spaces.lg),
 		},
+		emptyContentContainer: {
+			flex: 1,
+		},
 		listFooterComponent: {
 			marginTop: ms(spaces.xs),
 		},

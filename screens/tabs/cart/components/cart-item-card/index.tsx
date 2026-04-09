@@ -18,9 +18,8 @@ interface CartItemCardProps {
 const CartItemCard = ({ productId }: CartItemCardProps) => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const { items, removeItemFromCart } = useCartStore();
-
-	const currentItem = items.find((item) => item.id === productId);
+	const removeItemFromCart = useCartStore((state) => state.removeItemFromCart);
+	const currentItem = useCartStore((state) => state.items.find((item) => item.id === productId));
 
 	if (!currentItem) {
 		return null;

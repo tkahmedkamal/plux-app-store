@@ -13,7 +13,7 @@ import makeStyles from './style';
 const CartScreen = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const { items } = useCartStore();
+	const items = useCartStore((state) => state.items);
 
 	const isEmpty = items.length === 0;
 
@@ -23,7 +23,7 @@ const CartScreen = () => {
 				data={items}
 				keyExtractor={({ id }) => id}
 				renderItem={({ item }) => <CartItemCard productId={item.id} />}
-				contentContainerStyle={[styles.contentContainer, isEmpty && { flex: 1 }]}
+				contentContainerStyle={[styles.contentContainer, isEmpty && styles.emptyContentContainer]}
 				ListFooterComponentStyle={styles.listFooterComponent}
 				ListFooterComponent={
 					!isEmpty ? (
