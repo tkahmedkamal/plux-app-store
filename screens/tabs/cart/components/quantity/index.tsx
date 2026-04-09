@@ -20,14 +20,16 @@ const Quantity = ({ productId }: QuantityProps) => {
 	const addToCart = useCartStore((state) => state.addToCart);
 	const removeFromCart = useCartStore((state) => state.removeFromCart);
 
-	const quantity = currentItem?.quantity ?? 0;
+	if (!currentItem) {
+		return null;
+	}
+
+	const quantity = currentItem.quantity;
 
 	const handleIncrease = () => {
-		if (!currentItem) return;
 		addToCart(currentItem);
 	};
 	const handleDecrease = () => {
-		if (!currentItem) return;
 		removeFromCart(currentItem);
 	};
 
@@ -37,6 +39,8 @@ const Quantity = ({ productId }: QuantityProps) => {
 				size='icon'
 				variant='outline'
 				iconBefore={<MaterialIcons name='remove' style={styles.icon} />}
+				accessibilityLabel='Decrease quantity'
+				accessibilityHint='Decrease the quantity of the product'
 				style={styles.button}
 				onPress={handleDecrease}
 			/>
@@ -45,6 +49,8 @@ const Quantity = ({ productId }: QuantityProps) => {
 				size='icon'
 				variant='outline'
 				iconAfter={<MaterialIcons name='add' style={styles.icon} />}
+				accessibilityLabel='Increase quantity'
+				accessibilityHint='Increase the quantity of the product'
 				style={styles.button}
 				onPress={handleIncrease}
 			/>
