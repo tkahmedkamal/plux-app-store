@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 import { AppButton, AppSafeArea, Divider } from '@/components';
 import { INITIAL_FILTERS } from '@/constants';
 import { useTheme } from '@/hooks';
-import useFilterStore from '@/store/filter-store';
+import { useFilterStore } from '@/store';
 
 import { FilterPrice, FilterSort } from './components';
 import makeStyles from './styles';

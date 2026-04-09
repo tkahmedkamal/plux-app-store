@@ -13,9 +13,10 @@ import { useTheme } from '@/hooks';
 import makeStyles from './styles';
 
 interface AppInputProps<T extends FieldValues> extends TextInputProps {
-	label: string;
+	label?: string;
 	name: Path<T>;
 	control: Control<T>;
+	hideError?: boolean;
 }
 
 const AppInput = <T extends FieldValues>({
@@ -23,6 +24,7 @@ const AppInput = <T extends FieldValues>({
 	control,
 	name,
 	secureTextEntry,
+	hideError,
 	style,
 	...props
 }: AppInputProps<T>) => {
@@ -86,7 +88,7 @@ const AppInput = <T extends FieldValues>({
 
 				return (
 					<View style={styles.container}>
-						<Text style={styles.label}>{label}</Text>
+						{label && <Text style={styles.label}>{label}</Text>}
 						<View style={[styles.fieldContainer, borderStyle]}>
 							<TextInput
 								style={[styles.input, style]}
@@ -105,7 +107,7 @@ const AppInput = <T extends FieldValues>({
 							/>
 							{renderIcon()}
 						</View>
-						{error && <Text style={styles.error}>{error.message}</Text>}
+						{error && !hideError && <Text style={styles.error}>{error.message}</Text>}
 					</View>
 				);
 			}}

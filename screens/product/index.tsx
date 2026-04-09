@@ -1,9 +1,11 @@
+import { Redirect, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
 
 import { Badge, WishlistButton } from '@/components';
 import { products } from '@/fake-data';
 import { useTheme } from '@/hooks';
+import { useCartStore } from '@/store';
 import { getCurrencyFormat } from '@/utils';
 
 import { AddToCart, RelatedProducts } from './components';
@@ -12,12 +14,26 @@ import makeStyles from './styles';
 const ProductScreen = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const { id } = useLocalSearchParams<{ id: string }>();
+	const addToCart = useCartStore((state) => state.addToCart);
 
-	const { title, description, price, currency, images, category, stock } = products[0];
+	const foundProduct = products.find((product) => product.id === id);
+
+	if (!foundProduct) {
+		return <Redirect href='/(app)/(tabs)/home' />;
+	}
+
+	const { title, description, price, currency, images, category, stock } = foundProduct;
 	const imageUrl = images[0]?.url;
 	const inStock = stock > 0;
 	const badgeVariant = inStock ? 'success' : 'destructive';
 	const badgeText = inStock ? 'In Stock' : 'Out of Stock';
+
+	const handleAddToCart = () => {
+		if (!inStock) return;
+
+		addToCart(foundProduct);
+	};
 
 	return (
 		<View style={styles.container}>
@@ -51,7 +67,7 @@ const ProductScreen = () => {
 					<Text style={styles.priceLabel}>Price</Text>
 					<Text style={styles.priceValue}>{getCurrencyFormat(currency, price)}</Text>
 				</View>
-				<AddToCart onPress={() => {}} />
+				<AddToCart onPress={handleAddToCart} disabled={!inStock} />
 			</View>
 		</View>
 	);

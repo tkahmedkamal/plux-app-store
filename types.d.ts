@@ -35,6 +35,11 @@ interface Category {
 	updatedAt: string;
 }
 
+interface ProductImage {
+	url: string;
+	id: string;
+	_id: string;
+}
 interface Product {
 	id: string;
 	title: string;
@@ -42,11 +47,7 @@ interface Product {
 	description: string;
 	price: number;
 	currency: string;
-	images: {
-		url: string;
-		id: string;
-		_id: string;
-	}[];
+	images: ProductImage[];
 	stock: number;
 	category: string;
 	categoryId: string;
