@@ -1,4 +1,4 @@
-import type { output } from 'zod';
+import type { ForgotPasswordPayload } from '@/contact/auth/forgot-password-contract';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -6,21 +6,15 @@ import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
-import { email, object } from 'zod';
 
 import { AppButton, AppInput } from '@/components';
+import { forgotPasswordSchema } from '@/contact/auth/forgot-password-contract';
 import { useTheme } from '@/hooks';
-import { requestOtpApi } from '@/services/auth';
+import { forgotPasswordApi } from '@/services/auth-service';
 import { useAuthFlowStore } from '@/store';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
-
-const forgotPasswordSchema = object({
-	email: email('Enter a valid email address'),
-});
-
-export type ForgotPassword = output<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
 	const theme = useTheme();
@@ -28,7 +22,7 @@ const ForgotPasswordForm = () => {
 	const setEmail = useAuthFlowStore((state) => state.setEmail);
 
 	const { mutate: requestOtp, isPending } = useMutation({
-		mutationFn: requestOtpApi,
+		mutationFn: forgotPasswordApi,
 		onError: (error) => {
 			Alert.alert('Error', error.message);
 		},
@@ -39,7 +33,7 @@ const ForgotPasswordForm = () => {
 		setFocus,
 		formState: { isValid, errors },
 		handleSubmit,
-	} = useForm<ForgotPassword>({
+	} = useForm<ForgotPasswordPayload>({
 		resolver: zodResolver(forgotPasswordSchema),
 		defaultValues: {
 			email: '',
@@ -47,7 +41,7 @@ const ForgotPasswordForm = () => {
 		mode: 'all',
 	});
 
-	const onSubmit = (values: ForgotPassword) => {
+	const onSubmit = (values: ForgotPasswordPayload) => {
 		requestOtp(values, {
 			onSuccess: () => {
 				setEmail(values.email);
@@ -57,7 +51,7 @@ const ForgotPasswordForm = () => {
 	};
 
 	const handleSubmitEditing = () => {
-		handleFocusOnError<ForgotPassword>({
+		handleFocusOnError<ForgotPasswordPayload>({
 			isValid,
 			errors,
 			setFocus,

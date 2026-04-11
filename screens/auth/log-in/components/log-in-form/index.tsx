@@ -1,4 +1,4 @@
-import type { output } from 'zod';
+import type { LoginPayload } from '@/contact/auth/login-contract';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -6,22 +6,15 @@ import { Link, router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
-import { email, object, string } from 'zod';
 
 import { AppButton, AppInput } from '@/components';
+import { LoginSchema } from '@/contact/auth/login-contract';
 import { useTheme } from '@/hooks';
-import { loginApi } from '@/services/auth';
+import { loginApi } from '@/services/auth-service';
 import { useAuthStore } from '@/store';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
-
-const LoginSchema = object({
-	email: email('Enter a valid email address'),
-	password: string().min(8, 'Password must contain at least 8 characters'),
-});
-
-export type Login = output<typeof LoginSchema>;
 
 const LoginForm = () => {
 	const theme = useTheme();
@@ -46,7 +39,7 @@ const LoginForm = () => {
 		setFocus,
 		formState: { isValid, errors },
 		handleSubmit,
-	} = useForm<Login>({
+	} = useForm<LoginPayload>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
 			email: 'dev.tkahmedkamal@gmail.com',
@@ -55,12 +48,12 @@ const LoginForm = () => {
 		mode: 'all',
 	});
 
-	const onSubmit = (values: Login) => {
+	const onSubmit = (values: LoginPayload) => {
 		login(values);
 	};
 
 	const handleSubmitEditing = () => {
-		handleFocusOnError<Login>({
+		handleFocusOnError<LoginPayload>({
 			isValid,
 			errors,
 			setFocus,

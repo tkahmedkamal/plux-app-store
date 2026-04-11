@@ -1,4 +1,4 @@
-import type { output } from 'zod';
+import type { SignupPayload } from '@/contact/auth/signup-contract';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -6,30 +6,14 @@ import { Link, router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
-import { email, object, string } from 'zod';
 
 import { AppButton, AppInput, AppPicker } from '@/components';
+import { SignupSchema } from '@/contact/auth/signup-contract';
 import { useTheme } from '@/hooks';
-import { signupApi } from '@/services/auth';
+import { signupApi } from '@/services/auth-service';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
-
-const SignupSchema = object({
-	name: string().min(3, 'Your name should be at least 3 characters'),
-	email: email('Enter a valid email address'),
-	password: string().min(8, 'Password must contain at least 8 characters'),
-	role: string().refine(
-		(value) => {
-			return value.includes('customer') || value.includes('seller');
-		},
-		{
-			error: 'The role field is required',
-		}
-	),
-});
-
-export type Signup = output<typeof SignupSchema>;
 
 const SignupForm = () => {
 	const theme = useTheme();
@@ -51,7 +35,7 @@ const SignupForm = () => {
 		setFocus,
 		formState: { isValid, errors },
 		handleSubmit,
-	} = useForm<Signup>({
+	} = useForm<SignupPayload>({
 		resolver: zodResolver(SignupSchema),
 		defaultValues: {
 			name: '',
@@ -62,12 +46,12 @@ const SignupForm = () => {
 		mode: 'all',
 	});
 
-	const onSubmit = (values: Signup) => {
+	const onSubmit = (values: SignupPayload) => {
 		signup(values);
 	};
 
 	const handleSubmitEditing = () => {
-		handleFocusOnError<Signup>({
+		handleFocusOnError<SignupPayload>({
 			isValid,
 			errors,
 			setFocus,

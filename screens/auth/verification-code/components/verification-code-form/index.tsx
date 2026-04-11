@@ -1,4 +1,4 @@
-import type { output } from 'zod';
+import type { VerificationOtpType } from '@/contact/auth/verify-otp-contract';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -6,20 +6,14 @@ import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
-import { object, string } from 'zod';
 
 import { AppButton, OTPInput } from '@/components';
+import { verificationOtpSchema } from '@/contact/auth/verify-otp-contract';
 import { useTheme } from '@/hooks';
-import { verifyOtpApi } from '@/services/auth';
+import { verifyOtpApi } from '@/services/auth-service';
 import { useAuthFlowStore } from '@/store';
 
 import makeStyles from './styles';
-
-const verificationCodeSchema = object({
-	otpCode: string().min(4, 'Otp code must be 4 digits'),
-});
-
-export type VerificationCode = output<typeof verificationCodeSchema>;
 
 const VerificationCodeForm = () => {
 	const theme = useTheme();
@@ -38,15 +32,21 @@ const VerificationCodeForm = () => {
 		},
 	});
 
-	const { control, handleSubmit } = useForm<VerificationCode>({
-		resolver: zodResolver(verificationCodeSchema),
+	const { control, handleSubmit } = useForm<VerificationOtpType>({
+		resolver: zodResolver(verificationOtpSchema),
 		defaultValues: {
 			otpCode: '',
 		},
 		mode: 'all',
 	});
 
-	const onSubmit = (values: VerificationCode) => {
+	const onSubmit = (values: VerificationOtpType) => {
+		if (!email) {
+			Alert.alert('Session Expired', 'Please request a new OTP.');
+			router.replace('/(app)/(auth)/forgot-password');
+			return;
+		}
+
 		verifyOtp({
 			...values,
 			email,
