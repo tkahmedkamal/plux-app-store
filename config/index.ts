@@ -6,6 +6,8 @@ import { Alert } from 'react-native';
 
 import useAuthStore from '@/store/auth-store';
 
+let handlingUnauthorized = false;
+
 export const envConfig = {
 	baseApiUrl: process.env.EXPO_PUBLIC_API_URL!,
 };
@@ -18,7 +20,7 @@ export const apiRoutes = {
 export const api = axios.create({
 	baseURL: envConfig.baseApiUrl,
 	headers: {
-		contentType: 'application/json',
+		'Content-Type': 'application/json',
 	},
 });
 
@@ -37,7 +39,13 @@ api.interceptors.response.use(
 		return response;
 	},
 	(error: AxiosError) => {
-		if (error.response?.status && error.response.status === 401) {
+		const status = error.response?.status;
+		const requestUrl = error.config?.url ?? '';
+		const isAuthEndpoint = requestUrl.includes('/auth/');
+		const hasToken = Boolean(useAuthStore.getState().accessToken);
+
+		if (status === 401 && hasToken && !isAuthEndpoint && !handlingUnauthorized) {
+			handlingUnauthorized = true;
 			useAuthStore.getState().clearAuth();
 			router.replace('/(app)/(auth)/log-in');
 			Alert.alert('Unauthorized', 'Token is invalid or expired, please login again.');
