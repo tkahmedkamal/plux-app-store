@@ -41,9 +41,15 @@ const VerificationCodeForm = () => {
 	});
 
 	const onSubmit = (values: VerificationOtpType) => {
+		if (!email) {
+			Alert.alert('Session Expired', 'Please request a new OTP.');
+			router.replace('/(app)/(auth)/forgot-password');
+			return;
+		}
+
 		verifyOtp({
 			...values,
-			email: email ?? '',
+			email,
 		});
 	};
 
