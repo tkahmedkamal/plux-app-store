@@ -2,7 +2,7 @@ import type { output } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
@@ -11,6 +11,7 @@ import { object, string } from 'zod';
 import { AppButton, OTPInput } from '@/components';
 import { useTheme } from '@/hooks';
 import { verifyOtpApi } from '@/services/auth';
+import { useAuthFlowStore } from '@/store';
 
 import makeStyles from './styles';
 
@@ -23,11 +24,13 @@ export type VerificationCode = output<typeof verificationCodeSchema>;
 const VerificationCodeForm = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
-	const { email } = useLocalSearchParams<{ email: string }>();
+	const email = useAuthFlowStore((state) => state.email);
+	const setEmail = useAuthFlowStore((state) => state.setEmail);
 
 	const { mutate: verifyOtp, isPending } = useMutation({
 		mutationFn: verifyOtpApi,
 		onSuccess: () => {
+			setEmail(null);
 			router.push('/(app)/(auth)/reset-password');
 		},
 		onError: (error) => {
@@ -46,7 +49,7 @@ const VerificationCodeForm = () => {
 	const onSubmit = (values: VerificationCode) => {
 		verifyOtp({
 			...values,
-			email: email,
+			email,
 		});
 	};
 

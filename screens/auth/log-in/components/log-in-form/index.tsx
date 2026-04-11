@@ -11,7 +11,7 @@ import { email, object, string } from 'zod';
 import { AppButton, AppInput } from '@/components';
 import { useTheme } from '@/hooks';
 import { loginApi } from '@/services/auth';
-import useAuthStore from '@/store/auth-store';
+import { useAuthStore } from '@/store';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';

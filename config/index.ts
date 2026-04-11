@@ -4,7 +4,7 @@ import axios from 'axios';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
 
-import useAuthStore from '@/store/auth-store';
+import { useAuthStore } from '@/store';
 
 export const envConfig = {
 	baseApiUrl: process.env.EXPO_PUBLIC_API_URL!,
