@@ -6,8 +6,6 @@ import { Alert } from 'react-native';
 
 import useAuthStore from '@/store/auth-store';
 
-let handlingUnauthorized = false;
-
 export const envConfig = {
 	baseApiUrl: process.env.EXPO_PUBLIC_API_URL!,
 };
@@ -43,9 +41,11 @@ api.interceptors.response.use(
 		const requestUrl = error.config?.url ?? '';
 		const isAuthEndpoint = requestUrl.includes('/auth/');
 		const hasToken = Boolean(useAuthStore.getState().accessToken);
+		const handlingUnauthorized = useAuthStore.getState().handlingUnauthorized;
+		const setHandlingUnauthorized = useAuthStore.getState().setHandlingUnauthorized;
 
 		if (status === 401 && hasToken && !isAuthEndpoint && !handlingUnauthorized) {
-			handlingUnauthorized = true;
+			setHandlingUnauthorized(true);
 			useAuthStore.getState().clearAuth();
 			router.replace('/(app)/(auth)/log-in');
 			Alert.alert('Unauthorized', 'Token is invalid or expired, please login again.');
