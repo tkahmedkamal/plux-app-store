@@ -9,20 +9,24 @@ type AccessTokenState = string | null;
 interface InitialState {
 	user: UserState;
 	accessToken: AccessTokenState;
+	handlingUnauthorized: boolean;
 	setUser: (user: UserState) => void;
 	setAccessToken: (accessToken: AccessTokenState) => void;
+	setHandlingUnauthorized: (value: boolean) => void;
 	clearAuth: () => void;
 }
 
 const useAuthStore = create<InitialState>()(
 	persist(
-		(set) => ({
-			user: null as UserState,
-			accessToken: null as AccessTokenState,
+		(set): InitialState => ({
+			user: null,
+			accessToken: null,
+			handlingUnauthorized: false,
 
-			setUser: (user: UserState) => set({ user }),
-			setAccessToken: (accessToken: AccessTokenState) => set({ accessToken }),
-			clearAuth: () => set({ user: null, accessToken: null }),
+			setUser: (user) => set({ user }),
+			setAccessToken: (accessToken) => set({ accessToken }),
+			setHandlingUnauthorized: (value) => set({ handlingUnauthorized: value }),
+			clearAuth: () => set({ user: null, accessToken: null, handlingUnauthorized: false }),
 		}),
 		{
 			name: 'auth',
