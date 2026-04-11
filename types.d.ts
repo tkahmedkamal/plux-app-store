@@ -13,6 +13,17 @@ interface BaseResponse {
 	status: number;
 }
 
+interface ApiErrorResponse {
+	success: boolean;
+	status: number;
+	message: string;
+	error: {
+		code: string;
+		message: string;
+		details: Record<string, string>;
+	};
+}
+
 interface Meta {
 	page: number;
 	limit: number;
@@ -22,6 +33,17 @@ interface Meta {
 	hasPrev: boolean;
 }
 
+interface User {
+	id: string;
+	email: string;
+	name: string;
+}
+
+interface AuthData {
+	user: User;
+	accessToken: string;
+	refreshToken: string;
+}
 interface Category {
 	id: string;
 	name: string;
@@ -57,11 +79,6 @@ interface Product {
 		email: string;
 		name: string;
 	};
-}
-interface AuthData {
-	user: User;
-	accessToken: string;
-	refreshToken: string;
 }
 
 interface FilterParams {
