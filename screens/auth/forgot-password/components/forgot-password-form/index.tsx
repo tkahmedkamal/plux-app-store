@@ -1,14 +1,16 @@
 import type { output } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { email, object } from 'zod';
 
 import { AppButton, AppInput } from '@/components';
 import { useTheme } from '@/hooks';
+import { requestOtpApi } from '@/services/auth';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
@@ -17,12 +19,21 @@ const forgotPasswordSchema = object({
 	email: email('Enter a valid email address'),
 });
 
-type ForgotPassword = output<typeof forgotPasswordSchema>;
+export type ForgotPassword = output<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
-	const { push } = useRouter();
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+
+	const { mutate: requestOtp, isPending } = useMutation({
+		mutationFn: requestOtpApi,
+		onSuccess: () => {
+			router.push('/(app)/(auth)/verification-code');
+		},
+		onError: (error) => {
+			Alert.alert('Error', error.message);
+		},
+	});
 
 	const {
 		control,
@@ -38,8 +49,7 @@ const ForgotPasswordForm = () => {
 	});
 
 	const onSubmit = (values: ForgotPassword) => {
-		console.log(values);
-		push('/(app)/(auth)/verification-code');
+		requestOtp(values);
 	};
 
 	const handleSubmitEditing = () => {
@@ -60,10 +70,11 @@ const ForgotPasswordForm = () => {
 					label='Email'
 					placeholder='example@domin.com'
 					keyboardType='email-address'
+					editable={!isPending}
 					onSubmitEditing={handleSubmitEditing}
 				/>
 			</View>
-			<AppButton title='Send Code' onPress={handleSubmit(onSubmit)} />
+			<AppButton title='Send Code' onPress={handleSubmit(onSubmit)} isLoading={isPending} />
 		</View>
 	);
 };
