@@ -1,7 +1,13 @@
-import type { LoginApiResponse, SignupApiResponse, requestOtpApiResponse } from './types';
+import type {
+	LoginApiResponse,
+	SignupApiResponse,
+	requestOtpApiResponse,
+	verifyOtpApiResponse,
+} from './types';
 import type { ForgotPassword } from '@/screens/auth/forgot-password/components/forgot-password-form';
 import type { Login } from '@/screens/auth/log-in/components/log-in-form';
 import type { Signup } from '@/screens/auth/sign-up/components/sign-up-form';
+import type { VerificationCode } from '@/screens/auth/verification-code/components/verification-code-form';
 
 import { api, apiRoutes } from '@/config';
 import { catchApiError } from '@/utils';
@@ -28,6 +34,15 @@ export const requestOtpApi = async (data: ForgotPassword): Promise<requestOtpApi
 	try {
 		const response = await api.post(apiRoutes.requestOtp, data);
 		return response.data as requestOtpApiResponse;
+	} catch (error: unknown) {
+		throw catchApiError(error);
+	}
+};
+
+export const verifyOtpApi = async (data: VerificationCode): Promise<verifyOtpApiResponse> => {
+	try {
+		const response = await api.post(apiRoutes.verifyOtp, data);
+		return response.data as verifyOtpApiResponse;
 	} catch (error: unknown) {
 		throw catchApiError(error);
 	}

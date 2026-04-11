@@ -11,6 +11,7 @@ import { email, object } from 'zod';
 import { AppButton, AppInput } from '@/components';
 import { useTheme } from '@/hooks';
 import { requestOtpApi } from '@/services/auth';
+import { useAuthFlowStore } from '@/store';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
@@ -24,12 +25,10 @@ export type ForgotPassword = output<typeof forgotPasswordSchema>;
 const ForgotPasswordForm = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const setEmail = useAuthFlowStore((state) => state.setEmail);
 
 	const { mutate: requestOtp, isPending } = useMutation({
 		mutationFn: requestOtpApi,
-		onSuccess: () => {
-			router.push('/(app)/(auth)/verification-code');
-		},
 		onError: (error) => {
 			Alert.alert('Error', error.message);
 		},
@@ -49,7 +48,12 @@ const ForgotPasswordForm = () => {
 	});
 
 	const onSubmit = (values: ForgotPassword) => {
-		requestOtp(values);
+		requestOtp(values, {
+			onSuccess: () => {
+				setEmail(values.email);
+				router.push('/(app)/(auth)/verification-code');
+			},
+		});
 	};
 
 	const handleSubmitEditing = () => {

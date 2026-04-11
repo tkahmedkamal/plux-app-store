@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { AppButton } from '@/components';
-import useAuthStore from '@/store/auth-store';
+import { useAuthStore } from '@/store';
 
 const Account = () => {
 	const clearAuth = useAuthStore((state) => state.clearAuth);

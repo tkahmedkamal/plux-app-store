@@ -11,3 +11,7 @@ export interface requestOtpApiResponse extends BaseResponse {
 		message: string;
 	};
 }
+
+export interface verifyOtpApiResponse extends BaseResponse {
+	data: AuthData;
+}
