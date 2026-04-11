@@ -13,6 +13,7 @@ export const envConfig = {
 export const apiRoutes = {
 	signup: `${envConfig.baseApiUrl}/auth/register`,
 	login: `${envConfig.baseApiUrl}/auth/login`,
+	requestOtp: `${envConfig.baseApiUrl}/auth/otp/request`,
 };
 
 export const api = axios.create({
