@@ -14,6 +14,7 @@ export const apiRoutes = {
 	signup: `${envConfig.baseApiUrl}/auth/register`,
 	login: `${envConfig.baseApiUrl}/auth/login`,
 	requestOtp: `${envConfig.baseApiUrl}/auth/otp/request`,
+	verifyOtp: `${envConfig.baseApiUrl}/auth/otp/verify`,
 };
 
 export const api = axios.create({

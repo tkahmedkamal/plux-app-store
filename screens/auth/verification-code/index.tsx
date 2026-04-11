@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { KeyboardAvoidingView, ScrollView } from 'react-native';
 
@@ -11,6 +12,7 @@ import makeStyles from './styles';
 const VerificationCodeScreen = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const { email } = useLocalSearchParams<{ email: string }>();
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behavior={keyboardBehavior}>
@@ -19,7 +21,7 @@ const VerificationCodeScreen = () => {
 					<ScreenHeader
 						title='Enter 4 Digit Code'
 						text='Enter 4 digit code that your receive on your email '
-						suffix='example@demo.com'
+						suffix={email}
 						withBackButton
 					/>
 					<VerificationCodeForm />

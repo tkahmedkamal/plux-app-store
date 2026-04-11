@@ -27,9 +27,6 @@ const ForgotPasswordForm = () => {
 
 	const { mutate: requestOtp, isPending } = useMutation({
 		mutationFn: requestOtpApi,
-		onSuccess: () => {
-			router.push('/(app)/(auth)/verification-code');
-		},
 		onError: (error) => {
 			Alert.alert('Error', error.message);
 		},
@@ -49,7 +46,16 @@ const ForgotPasswordForm = () => {
 	});
 
 	const onSubmit = (values: ForgotPassword) => {
-		requestOtp(values);
+		requestOtp(values, {
+			onSuccess: () => {
+				router.push({
+					pathname: '/(app)/(auth)/verification-code',
+					params: {
+						email: values.email,
+					},
+				});
+			},
+		});
 	};
 
 	const handleSubmitEditing = () => {
