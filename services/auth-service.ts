@@ -3,6 +3,10 @@ import type {
 	RequestOtpPayload,
 } from '@/contact/auth/forgot-password-contract';
 import type { LoginApiResponse, LoginPayload } from '@/contact/auth/login-contract';
+import type {
+	ResetPasswordApiResponse,
+	ResetPasswordPayload,
+} from '@/contact/auth/reset-password-contract';
 import type { SignupApiResponse, SignupPayload } from '@/contact/auth/signup-contract';
 import type { VerifyOtpApiResponse, VerifyOtpPayload } from '@/contact/auth/verify-otp-contract';
 
@@ -47,4 +51,15 @@ export const verifyOtpApi = async (data: VerifyOtpPayload): Promise<VerifyOtpApi
 
 export const resendOtpApi = async (data: RequestOtpPayload): Promise<RequestOtpApiResponse> => {
 	return requestOtpApi(data);
+};
+
+export const resetPasswordApi = async (
+	data: ResetPasswordPayload
+): Promise<ResetPasswordApiResponse> => {
+	try {
+		const response = await api.post(apiRoutes.resetPassword, data);
+		return response.data as ResetPasswordApiResponse;
+	} catch (error: unknown) {
+		throw catchApiError(error);
+	}
 };
