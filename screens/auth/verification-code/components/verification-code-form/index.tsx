@@ -20,12 +20,14 @@ const VerificationCodeForm = () => {
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 	const email = useAuthFlowStore((state) => state.email);
 	const setEmail = useAuthFlowStore((state) => state.setEmail);
+	const setPasswordResetToken = useAuthFlowStore((state) => state.setPasswordResetToken);
 
 	const { mutate: verifyOtp, isPending } = useMutation({
 		mutationFn: verifyOtpApi,
-		onSuccess: () => {
+		onSuccess: (data) => {
 			setEmail(null);
-			router.push('/(app)/(auth)/reset-password');
+			setPasswordResetToken(data.data.passwordResetToken);
+			router.replace('/(app)/(auth)/reset-password');
 		},
 		onError: (error) => {
 			Alert.alert('Error', error.message);

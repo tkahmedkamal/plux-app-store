@@ -13,9 +13,10 @@ export interface VerifyOtpPayload extends VerificationOtpType {
 }
 
 export interface VerifyOtpApiResponse extends BaseResponse {
-	data: AuthData;
-}
-
-export interface ResendOtpPayload {
-	email: string;
+	data: {
+		user: User;
+		accessToken: string;
+		refreshToken: string;
+		passwordResetToken: string;
+	};
 }

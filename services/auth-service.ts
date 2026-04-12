@@ -1,14 +1,10 @@
 import type {
-	ForgotPasswordApiResponse,
-	ForgotPasswordPayload,
+	RequestOtpApiResponse,
+	RequestOtpPayload,
 } from '@/contact/auth/forgot-password-contract';
 import type { LoginApiResponse, LoginPayload } from '@/contact/auth/login-contract';
 import type { SignupApiResponse, SignupPayload } from '@/contact/auth/signup-contract';
-import type {
-	ResendOtpPayload,
-	VerifyOtpApiResponse,
-	VerifyOtpPayload,
-} from '@/contact/auth/verify-otp-contract';
+import type { VerifyOtpApiResponse, VerifyOtpPayload } from '@/contact/auth/verify-otp-contract';
 
 import { api, apiRoutes } from '@/config';
 import { catchApiError } from '@/utils';
@@ -31,12 +27,10 @@ export const loginApi = async (data: LoginPayload): Promise<LoginApiResponse> =>
 	}
 };
 
-export const forgotPasswordApi = async (
-	data: ForgotPasswordPayload
-): Promise<ForgotPasswordApiResponse> => {
+export const requestOtpApi = async (data: RequestOtpPayload): Promise<RequestOtpApiResponse> => {
 	try {
 		const response = await api.post(apiRoutes.requestOtp, data);
-		return response.data as ForgotPasswordApiResponse;
+		return response.data as RequestOtpApiResponse;
 	} catch (error: unknown) {
 		throw catchApiError(error);
 	}
@@ -51,6 +45,6 @@ export const verifyOtpApi = async (data: VerifyOtpPayload): Promise<VerifyOtpApi
 	}
 };
 
-export const resendOtpApi = async (data: ResendOtpPayload) => {
-	forgotPasswordApi(data);
+export const resendOtpApi = async (data: RequestOtpPayload): Promise<RequestOtpApiResponse> => {
+	return requestOtpApi(data);
 };

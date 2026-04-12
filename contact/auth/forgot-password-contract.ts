@@ -6,9 +6,11 @@ export const forgotPasswordSchema = object({
 	email: email('Enter a valid email address'),
 });
 
-export type ForgotPasswordPayload = output<typeof forgotPasswordSchema>;
+export type ForgotPasswordType = output<typeof forgotPasswordSchema>;
 
-export interface ForgotPasswordApiResponse extends BaseResponse {
+export type RequestOtpPayload = ForgotPasswordType;
+
+export interface RequestOtpApiResponse extends BaseResponse {
 	data: {
 		message: string;
 	};
