@@ -1,38 +1,46 @@
-import type { output } from 'zod';
+import type { ResetPasswordType } from '@/contact/auth/reset-password-contract';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
-import { object, string } from 'zod';
+import { Alert, View } from 'react-native';
 
 import { AppButton, AppInput } from '@/components';
+import { resetPasswordSchema } from '@/contact/auth/reset-password-contract';
 import { useTheme } from '@/hooks';
+import { resetPasswordApi } from '@/services/auth-service';
+import { useAuthFlowStore } from '@/store';
 import { handleFocusOnError } from '@/utils';
 
 import makeStyles from './styles';
 
-const ResetPasswordSchema = object({
-	password: string().min(6, 'Password must contain at least 6 characters'),
-	confirmPassword: string().min(1, 'Confirm Password is Required'),
-}).refine((data) => data.password === data.confirmPassword, {
-	error: "Passwords don't match",
-	path: ['confirmPassword'],
-});
-
-type ResetPassword = output<typeof ResetPasswordSchema>;
-
 const ResetPasswordForm = () => {
 	const theme = useTheme();
 	const styles = useMemo(() => makeStyles(theme), [theme]);
+	const passwordResetToken = useAuthFlowStore((state) => state.passwordResetToken);
+	const setPasswordResetToken = useAuthFlowStore((state) => state.setPasswordResetToken);
+
+	const { mutate: resetPassword, isPending } = useMutation({
+		mutationFn: resetPasswordApi,
+		onSuccess: (data) => {
+			Alert.alert('Password reset successfully', data.data.message);
+			setPasswordResetToken(null);
+			router.replace('/(app)/(auth)/log-in');
+		},
+		onError: (error) => {
+			Alert.alert('Error', error.message);
+		},
+	});
 
 	const {
 		control,
 		formState: { isValid, errors },
 		setFocus,
 		handleSubmit,
-	} = useForm<ResetPassword>({
-		resolver: zodResolver(ResetPasswordSchema),
+	} = useForm<ResetPasswordType>({
+		resolver: zodResolver(resetPasswordSchema),
 		defaultValues: {
 			password: '',
 			confirmPassword: '',
@@ -40,12 +48,21 @@ const ResetPasswordForm = () => {
 		mode: 'all',
 	});
 
-	const onSubmit = (values: ResetPassword) => {
-		console.log(values);
+	const onSubmit = (values: ResetPasswordType) => {
+		if (!passwordResetToken) {
+			Alert.alert('Session Expired', 'Please request a new password reset token.');
+			router.replace('/(app)/(auth)/forgot-password');
+			return;
+		}
+
+		resetPassword({
+			password: values.password,
+			passwordResetToken: passwordResetToken,
+		});
 	};
 
 	const handleSubmitEditing = () => {
-		handleFocusOnError<ResetPassword>({
+		handleFocusOnError<ResetPasswordType>({
 			isValid,
 			errors,
 			setFocus,
@@ -62,6 +79,7 @@ const ResetPasswordForm = () => {
 					label='Password'
 					placeholder='••••••'
 					secureTextEntry
+					editable={!isPending}
 					onSubmitEditing={handleSubmitEditing}
 				/>
 				<AppInput
@@ -70,10 +88,11 @@ const ResetPasswordForm = () => {
 					label='Confirm Password'
 					placeholder='••••••'
 					secureTextEntry
+					editable={!isPending}
 					onSubmitEditing={handleSubmitEditing}
 				/>
 			</View>
-			<AppButton title='Continue' onPress={handleSubmit(onSubmit)} />
+			<AppButton title='Continue' onPress={handleSubmit(onSubmit)} isLoading={isPending} />
 		</View>
 	);
 };

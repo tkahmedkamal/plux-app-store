@@ -7,7 +7,6 @@ const makeStyles = ({ colors, fontSizes, fonts, spaces, rounded }: Theme) => {
 	return StyleSheet.create({
 		container: {
 			gap: ms(spaces.xs),
-			flex: 1,
 		},
 		label: {
 			fontFamily: fonts.medium,
