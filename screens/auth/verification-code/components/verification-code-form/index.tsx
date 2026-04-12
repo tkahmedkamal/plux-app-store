@@ -10,7 +10,7 @@ import { Alert, View } from 'react-native';
 import { AppButton, OTPInput } from '@/components';
 import { verificationOtpSchema } from '@/contact/auth/verify-otp-contract';
 import { useTheme } from '@/hooks';
-import { verifyOtpApi } from '@/services/auth-service';
+import { resendOtpApi, verifyOtpApi } from '@/services/auth-service';
 import { useAuthFlowStore } from '@/store';
 
 import makeStyles from './styles';
@@ -20,12 +20,24 @@ const VerificationCodeForm = () => {
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 	const email = useAuthFlowStore((state) => state.email);
 	const setEmail = useAuthFlowStore((state) => state.setEmail);
+	const setPasswordResetToken = useAuthFlowStore((state) => state.setPasswordResetToken);
 
 	const { mutate: verifyOtp, isPending } = useMutation({
 		mutationFn: verifyOtpApi,
-		onSuccess: () => {
+		onSuccess: (data) => {
 			setEmail(null);
-			router.push('/(app)/(auth)/reset-password');
+			setPasswordResetToken(data.data.passwordResetToken);
+			router.replace('/(app)/(auth)/reset-password');
+		},
+		onError: (error) => {
+			Alert.alert('Error', error.message);
+		},
+	});
+
+	const { mutate: resendOtp } = useMutation({
+		mutationFn: resendOtpApi,
+		onSuccess: () => {
+			Alert.alert('OTP resent successfully', 'Please check your email for the new OTP.');
 		},
 		onError: (error) => {
 			Alert.alert('Error', error.message);
@@ -53,10 +65,20 @@ const VerificationCodeForm = () => {
 		});
 	};
 
+	const handleResendOtp = () => {
+		if (!email) {
+			Alert.alert('Session Expired', 'Please request a new OTP.');
+			router.replace('/(app)/(auth)/forgot-password');
+			return;
+		}
+
+		resendOtp({ email });
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.fieldContainer}>
-				<OTPInput name='otpCode' control={control} onResendCode={() => {}} />
+				<OTPInput name='otpCode' control={control} onResendCode={handleResendOtp} />
 			</View>
 			<AppButton title='Continue' onPress={handleSubmit(onSubmit)} isLoading={isPending} />
 		</View>
