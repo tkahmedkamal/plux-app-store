@@ -3,7 +3,7 @@ import type { ResetPasswordType } from '@/contact/auth/reset-password-contract';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
 
@@ -21,6 +21,12 @@ const ResetPasswordForm = () => {
 	const styles = useMemo(() => makeStyles(theme), [theme]);
 	const passwordResetToken = useAuthFlowStore((state) => state.passwordResetToken);
 	const setPasswordResetToken = useAuthFlowStore((state) => state.setPasswordResetToken);
+
+	useEffect(() => {
+		return () => {
+			setPasswordResetToken(null);
+		};
+	}, [setPasswordResetToken]);
 
 	const { mutate: resetPassword, isPending } = useMutation({
 		mutationFn: resetPasswordApi,
