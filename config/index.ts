@@ -16,6 +16,7 @@ export const apiRoutes = {
 	requestOtp: `${envConfig.baseApiUrl}/auth/otp/request`,
 	verifyOtp: `${envConfig.baseApiUrl}/auth/otp/verify`,
 	resetPassword: `${envConfig.baseApiUrl}/auth/reset-password`,
+	getCategories: `${envConfig.baseApiUrl}/categories`,
 };
 
 export const api = axios.create({
