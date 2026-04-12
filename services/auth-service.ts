@@ -4,7 +4,11 @@ import type {
 } from '@/contact/auth/forgot-password-contract';
 import type { LoginApiResponse, LoginPayload } from '@/contact/auth/login-contract';
 import type { SignupApiResponse, SignupPayload } from '@/contact/auth/signup-contract';
-import type { VerifyOtpApiResponse, VerifyOtpPayload } from '@/contact/auth/verify-otp-contract';
+import type {
+	ResendOtpPayload,
+	VerifyOtpApiResponse,
+	VerifyOtpPayload,
+} from '@/contact/auth/verify-otp-contract';
 
 import { api, apiRoutes } from '@/config';
 import { catchApiError } from '@/utils';
@@ -45,4 +49,8 @@ export const verifyOtpApi = async (data: VerifyOtpPayload): Promise<VerifyOtpApi
 	} catch (error: unknown) {
 		throw catchApiError(error);
 	}
+};
+
+export const resendOtpApi = async (data: ResendOtpPayload) => {
+	forgotPasswordApi(data);
 };
